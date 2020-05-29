@@ -9,7 +9,7 @@ namespace Microblog.Controllers
     public class TangController : Controller
     {
         // GET: Tang
-        public ActionResult Index()
+        public ActionResult MyMicroblog()
         {
             return View();
         }
