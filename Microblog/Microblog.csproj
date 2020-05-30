@@ -201,6 +201,14 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="resource\blogcover1.jpg" />
+    <Content Include="resource\blogcover2.jpg" />
+    <Content Include="resource\blogcover3.jpg" />
+    <Content Include="resource\blogcover4.jpg" />
+    <Content Include="resource\blogcover5.jpg" />
+    <Content Include="resource\blogcover6.jpg" />
+    <Content Include="resource\blogcover7.jpg" />
+    <Content Include="resource\blogcover8.jpg" />
     <Content Include="resource\云图1.jpeg" />
     <Content Include="resource\云图2.jpg" />
     <Content Include="resource\云图3.jpg" />
