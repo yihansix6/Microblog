@@ -5,8 +5,48 @@
     margin: 0px;
     padding: 0px;
 }
-#zhengti{
-    width:100%;
-    height:800px;
-    border:1px solid red;
+
+#zhengti {
+    width: 100%;
+    height: 800px;
+    border: 1px solid red;
+    background-image: url(../resource/云图3.jpg);
+    background-repeat: no-repeat;
+}
+
+#zhucekuang {
+    width: 900px;
+    height: 600px;
+    border: 1px solid red;
+    margin: 0px auto;
+    margin-top: 170px;
+    background-color: #ffffff;
+}
+
+.zhucekuang_toubu {
+    width: 800px;
+    height: 60px;
+    margin: 0px auto;
+    border: 1px solid red;
+    
+}
+
+#dibukuai {
+    width: 900px;
+    height: 30px;
+    margin: 0px auto;
+    /*border: 1px solid red;*/
+    border-radius: 0px 0px 10px 10px;
+    background-color: #d6f3f7;
+    line-height: 30px;
+}
+
+.yi {
+    float: left;
+    padding-left: 50px;
+}
+
+.er {
+    float: right;
+    padding-right: 50px;
 }
