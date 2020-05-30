@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MicroblogDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Collections">
+    <Key>
+      <PropertyRef Name="collections_id" />
+    </Key>
+    <Property Name="collections_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="collections_time" Type="datetime" />
+    <Property Name="collections_status" Type="bit" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="messages_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="comments_id" />
+    </Key>
+    <Property Name="comments_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="comments_info" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="comments_infostate" Type="varchar" MaxLength="10" />
+    <Property Name="comments_time" Type="datetime" />
+    <Property Name="messages_id" Type="int" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FriendGroup">
+    <Key>
+      <PropertyRef Name="friendGroup_id" />
+    </Key>
+    <Property Name="friendGroup_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="friendGroup_type" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="messages_id" />
+    </Key>
+    <Property Name="messages_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="messagesType_id" Type="int" />
+    <Property Name="messages_info" Type="nvarchar(max)" />
+    <Property Name="messages_time" Type="datetime" />
+    <Property Name="messages_collectnum" Type="int" />
+    <Property Name="messages_commentnum" Type="int" />
+    <Property Name="messages_transpondnum" Type="int" />
+    <Property Name="messages_readnum" Type="int" />
+    <Property Name="resources_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessagesType">
+    <Key>
+      <PropertyRef Name="messagesType_id" />
+    </Key>
+    <Property Name="messagesType_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="messagesType_info" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Relation">
+    <Key>
+      <PropertyRef Name="relation_id" />
+    </Key>
+    <Property Name="relation_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="relation_time" Type="datetime" />
+    <Property Name="friendGroup_id" Type="int" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="user_byid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transpond">
+    <Key>
+      <PropertyRef Name="transpond_id" />
+    </Key>
+    <Property Name="transpond_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="messages_id" Type="int" Nullable="false" />
+    <Property Name="transpond_users_id" Type="int" Nullable="false" />
+    <Property Name="transpond_betime" Type="datetime" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“MicroblogDB.dbo.Userinfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="Userinfo">
+    <Key>
+      <PropertyRef Name="user_id" />
+      <PropertyRef Name="resources_themeurl" />
+    </Key>
+    <Property Name="userinfo_realname" Type="nvarchar" MaxLength="50" />
+    <Property Name="userinfo_address" Type="nvarchar" MaxLength="120" />
+    <Property Name="userinfo_sex" Type="char" MaxLength="10" />
+    <Property Name="userinfo_feeling" Type="nvarchar" MaxLength="50" />
+    <Property Name="userinfo_birthday" Type="date" />
+    <Property Name="userinfo_bloodtype" Type="nvarchar" MaxLength="50" />
+    <Property Name="userinfo_intro" Type="nvarchar" MaxLength="400" />
+    <Property Name="userinfo_email" Type="nvarchar" MaxLength="60" />
+    <Property Name="userinfo_qqnumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="userinfo_profession" Type="nvarchar" MaxLength="60" />
+    <Property Name="userinfo_tag" Type="nvarchar" MaxLength="200" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="user_headphoto" Type="nvarchar" MaxLength="200" />
+    <Property Name="resources_themeurl" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_password" Type="nvarchar" MaxLength="80" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="user_time" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Collections_Messages">
+    <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
+    <End Role="Collections" Type="Self.Collections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Messages">
+        <PropertyRef Name="messages_id" />
+      </Principal>
+      <Dependent Role="Collections">
+        <PropertyRef Name="messages_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Collections_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Collections" Type="Self.Collections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Collections">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_Messages">
+    <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Messages">
+        <PropertyRef Name="messages_id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="messages_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_MessagesType">
+    <End Role="MessagesType" Type="Self.MessagesType" Multiplicity="0..1" />
+    <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MessagesType">
+        <PropertyRef Name="messagesType_id" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="messagesType_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relation_FriendGroup">
+    <End Role="FriendGroup" Type="Self.FriendGroup" Multiplicity="1" />
+    <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FriendGroup">
+        <PropertyRef Name="friendGroup_id" />
+      </Principal>
+      <Dependent Role="Relation">
+        <PropertyRef Name="friendGroup_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relation_Users2">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Relation">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relation_Users3">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Relation" Type="Self.Relation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Relation">
+        <PropertyRef Name="relation_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transpond_Messages">
+    <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
+    <End Role="Transpond" Type="Self.Transpond" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Messages">
+        <PropertyRef Name="messages_id" />
+      </Principal>
+      <Dependent Role="Transpond">
+        <PropertyRef Name="messages_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transpond_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Transpond" Type="Self.Transpond" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Transpond">
+        <PropertyRef Name="transpond_users_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Userinfo_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Userinfo" Type="Self.Userinfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Userinfo">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MicroblogDBModelStoreContainer">
+    <EntitySet Name="Collections" EntityType="Self.Collections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FriendGroup" EntityType="Self.FriendGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MessagesType" EntityType="Self.MessagesType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transpond" EntityType="Self.Transpond" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Userinfo" EntityType="Self.Userinfo" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Userinfo].[userinfo_realname] AS [userinfo_realname], 
+    [Userinfo].[userinfo_address] AS [userinfo_address], 
+    [Userinfo].[userinfo_sex] AS [userinfo_sex], 
+    [Userinfo].[userinfo_feeling] AS [userinfo_feeling], 
+    [Userinfo].[userinfo_birthday] AS [userinfo_birthday], 
+    [Userinfo].[userinfo_bloodtype] AS [userinfo_bloodtype], 
+    [Userinfo].[userinfo_intro] AS [userinfo_intro], 
+    [Userinfo].[userinfo_email] AS [userinfo_email], 
+    [Userinfo].[userinfo_qqnumber] AS [userinfo_qqnumber], 
+    [Userinfo].[userinfo_profession] AS [userinfo_profession], 
+    [Userinfo].[userinfo_tag] AS [userinfo_tag], 
+    [Userinfo].[user_id] AS [user_id], 
+    [Userinfo].[user_headphoto] AS [user_headphoto], 
+    [Userinfo].[resources_themeurl] AS [resources_themeurl]
+    FROM [dbo].[Userinfo] AS [Userinfo]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Collections_Messages" Association="Self.FK_Collections_Messages">
+      <End Role="Messages" EntitySet="Messages" />
+      <End Role="Collections" EntitySet="Collections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Collections_Users" Association="Self.FK_Collections_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Collections" EntitySet="Collections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_Messages" Association="Self.FK_Comments_Messages">
+      <End Role="Messages" EntitySet="Messages" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_MessagesType" Association="Self.FK_Messages_MessagesType">
+      <End Role="MessagesType" EntitySet="MessagesType" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_Users" Association="Self.FK_Messages_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relation_FriendGroup" Association="Self.FK_Relation_FriendGroup">
+      <End Role="FriendGroup" EntitySet="FriendGroup" />
+      <End Role="Relation" EntitySet="Relation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relation_Users2" Association="Self.FK_Relation_Users2">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Relation" EntitySet="Relation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relation_Users3" Association="Self.FK_Relation_Users3">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Relation" EntitySet="Relation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transpond_Messages" Association="Self.FK_Transpond_Messages">
+      <End Role="Messages" EntitySet="Messages" />
+      <End Role="Transpond" EntitySet="Transpond" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transpond_Users" Association="Self.FK_Transpond_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Transpond" EntitySet="Transpond" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Userinfo_Users" Association="Self.FK_Userinfo_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Userinfo" EntitySet="Userinfo" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
