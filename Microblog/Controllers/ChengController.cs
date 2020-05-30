@@ -22,7 +22,10 @@ namespace Microblog.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <returns>视图</returns>
         public ActionResult Register()
         {
             return View();

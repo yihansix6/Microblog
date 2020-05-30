@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MicroblogDBModelStoreContainer" CdmEntityContainer="MicroblogDBEntities">
+    <EntitySetMapping Name="Collections">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Collections">
+        <MappingFragment StoreEntitySet="Collections">
+          <ScalarProperty Name="collections_id" ColumnName="collections_id" />
+          <ScalarProperty Name="collections_time" ColumnName="collections_time" />
+          <ScalarProperty Name="collections_status" ColumnName="collections_status" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="messages_id" ColumnName="messages_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Comments">
+        <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="comments_id" ColumnName="comments_id" />
+          <ScalarProperty Name="comments_info" ColumnName="comments_info" />
+          <ScalarProperty Name="comments_infostate" ColumnName="comments_infostate" />
+          <ScalarProperty Name="comments_time" ColumnName="comments_time" />
+          <ScalarProperty Name="messages_id" ColumnName="messages_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FriendGroup">
+      <EntityTypeMapping TypeName="MicroblogDBModel.FriendGroup">
+        <MappingFragment StoreEntitySet="FriendGroup">
+          <ScalarProperty Name="friendGroup_id" ColumnName="friendGroup_id" />
+          <ScalarProperty Name="friendGroup_type" ColumnName="friendGroup_type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Messages">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="messages_id" ColumnName="messages_id" />
+          <ScalarProperty Name="messagesType_id" ColumnName="messagesType_id" />
+          <ScalarProperty Name="messages_info" ColumnName="messages_info" />
+          <ScalarProperty Name="messages_time" ColumnName="messages_time" />
+          <ScalarProperty Name="messages_collectnum" ColumnName="messages_collectnum" />
+          <ScalarProperty Name="messages_commentnum" ColumnName="messages_commentnum" />
+          <ScalarProperty Name="messages_transpondnum" ColumnName="messages_transpondnum" />
+          <ScalarProperty Name="messages_readnum" ColumnName="messages_readnum" />
+          <ScalarProperty Name="resources_url" ColumnName="resources_url" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessagesType">
+      <EntityTypeMapping TypeName="MicroblogDBModel.MessagesType">
+        <MappingFragment StoreEntitySet="MessagesType">
+          <ScalarProperty Name="messagesType_id" ColumnName="messagesType_id" />
+          <ScalarProperty Name="messagesType_info" ColumnName="messagesType_info" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Relation">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Relation">
+        <MappingFragment StoreEntitySet="Relation">
+          <ScalarProperty Name="relation_id" ColumnName="relation_id" />
+          <ScalarProperty Name="relation_time" ColumnName="relation_time" />
+          <ScalarProperty Name="friendGroup_id" ColumnName="friendGroup_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_byid" ColumnName="user_byid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transpond">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Transpond">
+        <MappingFragment StoreEntitySet="Transpond">
+          <ScalarProperty Name="transpond_id" ColumnName="transpond_id" />
+          <ScalarProperty Name="messages_id" ColumnName="messages_id" />
+          <ScalarProperty Name="transpond_users_id" ColumnName="transpond_users_id" />
+          <ScalarProperty Name="transpond_betime" ColumnName="transpond_betime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_time" ColumnName="user_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Userinfo">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Userinfo">
+        <MappingFragment StoreEntitySet="Userinfo">
+          <ScalarProperty Name="userinfo_realname" ColumnName="userinfo_realname" />
+          <ScalarProperty Name="userinfo_address" ColumnName="userinfo_address" />
+          <ScalarProperty Name="userinfo_sex" ColumnName="userinfo_sex" />
+          <ScalarProperty Name="userinfo_feeling" ColumnName="userinfo_feeling" />
+          <ScalarProperty Name="userinfo_birthday" ColumnName="userinfo_birthday" />
+          <ScalarProperty Name="userinfo_bloodtype" ColumnName="userinfo_bloodtype" />
+          <ScalarProperty Name="userinfo_intro" ColumnName="userinfo_intro" />
+          <ScalarProperty Name="userinfo_email" ColumnName="userinfo_email" />
+          <ScalarProperty Name="userinfo_qqnumber" ColumnName="userinfo_qqnumber" />
+          <ScalarProperty Name="userinfo_profession" ColumnName="userinfo_profession" />
+          <ScalarProperty Name="userinfo_tag" ColumnName="userinfo_tag" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_headphoto" ColumnName="user_headphoto" />
+          <ScalarProperty Name="resources_themeurl" ColumnName="resources_themeurl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

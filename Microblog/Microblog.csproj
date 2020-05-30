@@ -186,6 +186,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ChengRegister.css" />
     <Content Include="Content\layui.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -200,6 +201,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="resource\云图1.jpeg" />
+    <Content Include="resource\云图2.jpg" />
+    <Content Include="resource\云图3.jpg" />
+    <Content Include="resource\云图4.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Model1.edmx">
@@ -232,10 +237,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Cheng\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="resource\" />
-    <Folder Include="Views\Cheng\" />
     <Folder Include="Views\Tang\" />
   </ItemGroup>
   <ItemGroup>
