@@ -176,6 +176,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Verification code class\auth code.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\MicroblogDB.mdf" />
@@ -186,6 +187,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ChengAccount Settings.css" />
     <Content Include="Content\ChengRegister.css" />
     <Content Include="Content\layui.css" />
     <Content Include="favicon.ico" />
@@ -246,6 +248,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Cheng\Register.cshtml" />
+    <Content Include="Views\Cheng\Loginshitu.cshtml" />
+    <Content Include="Views\Shared\_Account Settings.cshtml" />
+    <Content Include="Views\Cheng\_Account Settings_toubu.cshtml" />
+    <Content Include="Views\Cheng\AccountSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Tang\" />
