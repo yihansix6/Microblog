@@ -4,17 +4,76 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/ChengRegister.css" rel="stylesheet" />
     <title>Register</title>
+    <script type="text/javascript">
+
+    </script>
 </head>
 <body>
-    <div id="zhengti"> 
+    <div id="zhengti">
         <div id="zhucekuang">
-            <div class="zhucekuang_toubu"></div>
+            <div class="zhucekuang_toubu">
+                <p>注册微博账号，立即享用当下最酷最火的沟通交流工具，注册仅用30秒。</p>
+            </div>
+            <div id="zhobuzhucemokuai">
+                <div class="zhobuzhucemokuai_yi">
+                    <div class="zhobuzhucemokuai_yi_yidong">
+                        @using (Ajax.BeginForm("Login", "Cheng", new AjaxOptions
+                        {
+                            HttpMethod = "post",
+                            InsertionMode = InsertionMode.Replace
+
+                        }))
+                        {
+                            <table class="zhobuzhucemokuai_yi_biao">
+                                <tr>
+                                    <td class="biaoming">电子邮箱</td>
+                                    <td>@Html.TextBox("user_email")@Html.ValidationMessage("user_email")</td>
+                                </tr>
+                                <tr>
+                                    <td class="biaoming">创建名称</td>
+                                    <td>@Html.TextBox("user_name")@Html.ValidationMessage("user_name")</td>
+                                </tr>
+                                <tr>
+                                    <td class="biaoming">创建密码</td>
+                                    <td>@Html.Password("user_password")@Html.ValidationMessage("user_password")</td>
+                                </tr>
+                                <tr>
+                                    <td class="biaoming">确认密码</td>
+                                    <td>@Html.Password("querenmima")</td>
+                                </tr>
+                                <tr>
+                                    <td class="biaoming">验证码</td>
+                                    <td>
+                                        @Html.TextBox("yanzhengma")<img id="verifycode" class="yanzhengma" style="height: 30px;width: 108px;margin-left: -15px;margin-top: -8px;cursor: pointer;" src="@Url.Action("VerifyCode")" />
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>@Html.CheckBox("mi")我已看过并同意<span class="tiaokuan">《服务使用协议》</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center;"><input type="submit" value="立即注册" class="tijiaobiaodan" /></td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+
+                </div>
+                <div class="zhobuzhucemokuai_er">
+                    <ul>
+                        <li>已有微博账号？</li>
+                        <li>请直接登录</li>
+                    </ul>
+                    <a href="#" class="dengluweibo_chaolianjie">登录微博</a>
+                </div>
+
+            </div>
         </div>
         <div id="dibukuai">
             <span class="yi">AAAAAAA</span>
