@@ -1,2 +1,2 @@
 # Microblog
-ASP.NET MVC+EF 微博
+ASP.NET MVC + Entity Framework 微博

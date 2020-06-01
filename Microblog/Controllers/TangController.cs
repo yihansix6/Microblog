@@ -13,5 +13,10 @@ namespace Microblog.Controllers
         {
             return View();
         }
+
+        public ActionResult MyHomePage()
+        {
+            return View();
+        }
     }
 }
