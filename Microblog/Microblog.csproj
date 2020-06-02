@@ -240,6 +240,7 @@
     <Content Include="Scripts\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pignose.tab.min.js" />
+    <Content Include="Scripts\TangHomePage.js" />
     <Content Include="umeditor\dialogs\emotion\emotion.css" />
     <Content Include="umeditor\dialogs\emotion\emotion.js" />
     <Content Include="umeditor\dialogs\emotion\images\0.gif" />

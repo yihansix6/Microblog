@@ -28,6 +28,7 @@
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/pignose.tab.min.js"></script>
 <link href="~/Content/TangMyMicroblog.css" rel="stylesheet" />
+<script src="~/Scripts/TangHomePage.js"></script>
 <script type="text/javascript">
     $(function () {
         $('.tab').pignoseTab({
@@ -42,7 +43,7 @@
     <div id="left">
         <div id="futext">
             <span>你还可以输入<span>140字</span></span>
-            <input type="submit" value="发布" class="tijiaobiaodan" />
+            <input type="submit" value="发布" class="tijiaobiaodan" onclick="getPlainTxt();" />
             <!-- 加载编辑器的容器 -->
             <script id="container" name="content" type="text/plain" style="width:600px;height:180px;">
             </script>
