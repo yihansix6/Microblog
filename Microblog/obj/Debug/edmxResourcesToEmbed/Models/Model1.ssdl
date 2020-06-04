@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MicroblogDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="area">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="50" />
+    <Property Name="name" Type="nvarchar" MaxLength="60" />
+    <Property Name="cityCode" Type="nvarchar" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="6" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="provinceCode" Type="nvarchar" MaxLength="6" />
+  </EntityType>
   <EntityType Name="Collections">
     <Key>
       <PropertyRef Name="collections_id" />
@@ -50,6 +68,14 @@
     <Property Name="messagesType_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="messagesType_info" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="province">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="6" />
+    <Property Name="name" Type="nvarchar" MaxLength="40" />
+  </EntityType>
   <EntityType Name="Relation">
     <Key>
       <PropertyRef Name="relation_id" />
@@ -69,12 +95,9 @@
     <Property Name="transpond_users_id" Type="int" Nullable="false" />
     <Property Name="transpond_betime" Type="datetime" />
   </EntityType>
-  <!--生成过程中发现错误:
-警告 6002: 表/视图“MicroblogDB.dbo.Userinfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
   <EntityType Name="Userinfo">
     <Key>
       <PropertyRef Name="user_id" />
-      <PropertyRef Name="resources_themeurl" />
     </Key>
     <Property Name="userinfo_realname" Type="nvarchar" MaxLength="50" />
     <Property Name="userinfo_address" Type="nvarchar" MaxLength="120" />
@@ -89,7 +112,7 @@
     <Property Name="userinfo_tag" Type="nvarchar" MaxLength="200" />
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="user_headphoto" Type="nvarchar" MaxLength="200" />
-    <Property Name="resources_themeurl" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="resources_themeurl" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -101,6 +124,12 @@
     <Property Name="user_name" Type="nvarchar" MaxLength="60" Nullable="false" />
     <Property Name="user_time" Type="datetime" Nullable="false" />
   </EntityType>
+  <!--生成过程中发现错误:
+警告 6035: 关系“FK_area_city”在关系主端上有一些列不属于表的键的一部分。已排除了此关系。
+        <Association Name="FK_area_city" />-->
+  <!--生成过程中发现错误:
+警告 6035: 关系“FK_city_city”在关系主端上有一些列不属于表的键的一部分。已排除了此关系。
+        <Association Name="FK_city_city" />-->
   <Association Name="FK_Collections_Messages">
     <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
     <End Role="Collections" Type="Self.Collections" Multiplicity="*" />
@@ -235,7 +264,7 @@
   </Association>
   <Association Name="FK_Userinfo_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="Userinfo" Type="Self.Userinfo" Multiplicity="*" />
+    <End Role="Userinfo" Type="Self.Userinfo" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="user_id" />
@@ -245,33 +274,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="usp_zhucetianjia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user_email" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_time" Type="datetime" Mode="In" />
+  </Function>
   <EntityContainer Name="MicroblogDBModelStoreContainer">
+    <EntitySet Name="area" EntityType="Self.area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Collections" EntityType="Self.Collections" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FriendGroup" EntityType="Self.FriendGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MessagesType" EntityType="Self.MessagesType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="province" EntityType="Self.province" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transpond" EntityType="Self.Transpond" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Userinfo" EntityType="Self.Userinfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Userinfo" EntityType="Self.Userinfo" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Userinfo].[userinfo_realname] AS [userinfo_realname], 
-    [Userinfo].[userinfo_address] AS [userinfo_address], 
-    [Userinfo].[userinfo_sex] AS [userinfo_sex], 
-    [Userinfo].[userinfo_feeling] AS [userinfo_feeling], 
-    [Userinfo].[userinfo_birthday] AS [userinfo_birthday], 
-    [Userinfo].[userinfo_bloodtype] AS [userinfo_bloodtype], 
-    [Userinfo].[userinfo_intro] AS [userinfo_intro], 
-    [Userinfo].[userinfo_email] AS [userinfo_email], 
-    [Userinfo].[userinfo_qqnumber] AS [userinfo_qqnumber], 
-    [Userinfo].[userinfo_profession] AS [userinfo_profession], 
-    [Userinfo].[userinfo_tag] AS [userinfo_tag], 
-    [Userinfo].[user_id] AS [user_id], 
-    [Userinfo].[user_headphoto] AS [user_headphoto], 
-    [Userinfo].[resources_themeurl] AS [resources_themeurl]
-    FROM [dbo].[Userinfo] AS [Userinfo]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Collections_Messages" Association="Self.FK_Collections_Messages">
       <End Role="Messages" EntitySet="Messages" />
       <End Role="Collections" EntitySet="Collections" />

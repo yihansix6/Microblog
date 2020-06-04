@@ -22,7 +22,6 @@ namespace Microblog.Models
             this.Messages = new HashSet<Messages>();
             this.Relation = new HashSet<Relation>();
             this.Transpond = new HashSet<Transpond>();
-            this.Userinfo = new HashSet<Userinfo>();
         }
     
         public int user_id { get; set; }
@@ -42,7 +41,6 @@ namespace Microblog.Models
         public virtual Relation Relation1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transpond> Transpond { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Userinfo> Userinfo { get; set; }
+        public virtual Userinfo Userinfo { get; set; }
     }
 }

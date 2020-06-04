@@ -12,6 +12,8 @@ namespace Microblog.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class MicroblogDBEntities : DbContext
     {
@@ -25,14 +27,38 @@ namespace Microblog.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<area> area { get; set; }
+        public virtual DbSet<city> city { get; set; }
         public virtual DbSet<Collections> Collections { get; set; }
         public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<FriendGroup> FriendGroup { get; set; }
         public virtual DbSet<Messages> Messages { get; set; }
         public virtual DbSet<MessagesType> MessagesType { get; set; }
+        public virtual DbSet<province> province { get; set; }
         public virtual DbSet<Relation> Relation { get; set; }
         public virtual DbSet<Transpond> Transpond { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Userinfo> Userinfo { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+    
+        public virtual int usp_zhucetianjia(string user_email, string user_password, string user_name, Nullable<System.DateTime> user_time)
+        {
+            var user_emailParameter = user_email != null ?
+                new ObjectParameter("user_email", user_email) :
+                new ObjectParameter("user_email", typeof(string));
+    
+            var user_passwordParameter = user_password != null ?
+                new ObjectParameter("user_password", user_password) :
+                new ObjectParameter("user_password", typeof(string));
+    
+            var user_nameParameter = user_name != null ?
+                new ObjectParameter("user_name", user_name) :
+                new ObjectParameter("user_name", typeof(string));
+    
+            var user_timeParameter = user_time.HasValue ?
+                new ObjectParameter("user_time", user_time) :
+                new ObjectParameter("user_time", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_zhucetianjia", user_emailParameter, user_passwordParameter, user_nameParameter, user_timeParameter);
+        }
     }
 }

@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MicroblogDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="area">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="cityCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="code" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="provinceCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="Collections">
     <Key>
       <PropertyRef Name="collections_id" />
@@ -61,6 +79,14 @@
     <Property Name="messagesType_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_MessagesType" FromRole="MessagesType" ToRole="Messages" />
   </EntityType>
+  <EntityType Name="province">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="code" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="Relation">
     <Key>
       <PropertyRef Name="relation_id" />
@@ -85,6 +111,26 @@
     <NavigationProperty Name="Messages" Relationship="Self.FK_Transpond_Messages" FromRole="Transpond" ToRole="Messages" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Transpond_Users" FromRole="Transpond" ToRole="Users" />
   </EntityType>
+  <EntityType Name="Userinfo">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="userinfo_realname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_address" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_sex" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="userinfo_feeling" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_birthday" Type="DateTime" Precision="0" />
+    <Property Name="userinfo_bloodtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_intro" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_qqnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_profession" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="userinfo_tag" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="user_headphoto" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="resources_themeurl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Userinfo_Users" FromRole="Userinfo" ToRole="Users" />
+  </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="user_id" />
@@ -101,27 +147,6 @@
     <NavigationProperty Name="Relation1" Relationship="Self.FK_Relation_Users3" FromRole="Users" ToRole="Relation" />
     <NavigationProperty Name="Transpond" Relationship="Self.FK_Transpond_Users" FromRole="Users" ToRole="Transpond" />
     <NavigationProperty Name="Userinfo" Relationship="Self.FK_Userinfo_Users" FromRole="Users" ToRole="Userinfo" />
-  </EntityType>
-  <EntityType Name="Userinfo">
-    <Key>
-      <PropertyRef Name="user_id" />
-      <PropertyRef Name="resources_themeurl" />
-    </Key>
-    <Property Name="userinfo_realname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_address" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_sex" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-    <Property Name="userinfo_feeling" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_birthday" Type="DateTime" Precision="0" />
-    <Property Name="userinfo_bloodtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_intro" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_qqnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_profession" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="userinfo_tag" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="user_id" Type="Int32" Nullable="false" />
-    <Property Name="user_headphoto" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="resources_themeurl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Users" Relationship="Self.FK_Userinfo_Users" FromRole="Userinfo" ToRole="Users" />
   </EntityType>
   <Association Name="FK_Collections_Messages">
     <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
@@ -257,7 +282,7 @@
   </Association>
   <Association Name="FK_Userinfo_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="Userinfo" Type="Self.Userinfo" Multiplicity="*" />
+    <End Role="Userinfo" Type="Self.Userinfo" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="user_id" />
@@ -268,15 +293,18 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="MicroblogDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="area" EntityType="Self.area" />
+    <EntitySet Name="city" EntityType="Self.city" />
     <EntitySet Name="Collections" EntityType="Self.Collections" />
     <EntitySet Name="Comments" EntityType="Self.Comments" />
     <EntitySet Name="FriendGroup" EntityType="Self.FriendGroup" />
     <EntitySet Name="Messages" EntityType="Self.Messages" />
     <EntitySet Name="MessagesType" EntityType="Self.MessagesType" />
+    <EntitySet Name="province" EntityType="Self.province" />
     <EntitySet Name="Relation" EntityType="Self.Relation" />
     <EntitySet Name="Transpond" EntityType="Self.Transpond" />
-    <EntitySet Name="Users" EntityType="Self.Users" />
     <EntitySet Name="Userinfo" EntityType="Self.Userinfo" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
     <AssociationSet Name="FK_Collections_Messages" Association="Self.FK_Collections_Messages">
       <End Role="Messages" EntitySet="Messages" />
       <End Role="Collections" EntitySet="Collections" />
@@ -325,5 +353,11 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="Userinfo" EntitySet="Userinfo" />
     </AssociationSet>
+    <FunctionImport Name="usp_zhucetianjia">
+      <Parameter Name="user_email" Mode="In" Type="String" />
+      <Parameter Name="user_password" Mode="In" Type="String" />
+      <Parameter Name="user_name" Mode="In" Type="String" />
+      <Parameter Name="user_time" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
 </Schema>

@@ -1,6 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MicroblogDBModelStoreContainer" CdmEntityContainer="MicroblogDBEntities">
+    <EntitySetMapping Name="area">
+      <EntityTypeMapping TypeName="MicroblogDBModel.area">
+        <MappingFragment StoreEntitySet="area">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="cityCode" ColumnName="cityCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="city">
+      <EntityTypeMapping TypeName="MicroblogDBModel.city">
+        <MappingFragment StoreEntitySet="city">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Collections">
       <EntityTypeMapping TypeName="MicroblogDBModel.Collections">
         <MappingFragment StoreEntitySet="Collections">
@@ -56,6 +76,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="province">
+      <EntityTypeMapping TypeName="MicroblogDBModel.province">
+        <MappingFragment StoreEntitySet="province">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Relation">
       <EntityTypeMapping TypeName="MicroblogDBModel.Relation">
         <MappingFragment StoreEntitySet="Relation">
@@ -74,17 +103,6 @@
           <ScalarProperty Name="messages_id" ColumnName="messages_id" />
           <ScalarProperty Name="transpond_users_id" ColumnName="transpond_users_id" />
           <ScalarProperty Name="transpond_betime" ColumnName="transpond_betime" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="MicroblogDBModel.Users">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="user_email" ColumnName="user_email" />
-          <ScalarProperty Name="user_password" ColumnName="user_password" />
-          <ScalarProperty Name="user_name" ColumnName="user_name" />
-          <ScalarProperty Name="user_time" ColumnName="user_time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -108,5 +126,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MicroblogDBModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_time" ColumnName="user_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_zhucetianjia" FunctionName="MicroblogDBModel.Store.usp_zhucetianjia" />
   </EntityContainerMapping>
 </Mapping>
