@@ -1,0 +1,52 @@
+﻿body {
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#Account_dibu {
+    width: 70%;
+    height: 200px;
+    /*border: 1px solid red;*/
+    margin: 0px auto;
+    margin-top: 10px;
+    background-color: #ebf8fa;
+    position: relative;
+}
+
+    #Account_dibu ul {
+        list-style: none;
+    }
+
+        #Account_dibu ul li {
+            float: left;
+            padding-left: 60px;
+            padding-top: 30px;
+        }
+
+            #Account_dibu ul li a {
+                text-decoration: none;
+            }
+
+#Account_dibu_dibuwenzi {
+    width: 95%;
+    height: 40px;
+    line-height: 40px;
+    /*margin:0px auto;*/
+    border-top: 1px dotted #59afdd;
+    position: absolute;
+    left: 25px;
+    top: 160px;
+}
+
+.left {
+    float: left;
+    color: #afb2b2;
+}
+
+.right {
+    float: right;
+    color: #afb2b2;
+}

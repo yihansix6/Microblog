@@ -13,6 +13,7 @@
     /*border: 1px solid red;*/
     background-color: #ceeef4;
     display: flex;
+   
 }
 
 .toubu_yi {
@@ -30,6 +31,7 @@
     flex: 1;
     line-height: 50px;
     /*border: 1px solid red;*/
+  
 }
 
     .toubu_er ul {

@@ -3,6 +3,128 @@
     ViewBag.Title = "AccountSettings";
     Layout = "~/Views/Shared/_Account Settings.cshtml";
 }
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //设置默认时间
+        $("#shijian").val();
+        //获取所有的省
+        $.ajax({
+            type: "post",
+            url: "/Cheng/GetProvice",
+            dataType: "json",
+            success: function (result) {
+                //返回成功
+                //遍历JSON数组
+                $.each(result, function (i, item) {
+                    //获取实际值
+                    var value = item.code;
+                    //获取显示值
+                    var text = item.name;
+                    //在省下拉列表中追加<option>选项
+                    $("#sheng").append("<option value='" + value + "'>" + text + "</option>");
+                });
 
-<h2>AccountSettings</h2>
+                //加载市
+                GetCity();
+            }
+
+        });
+
+        function GetCity() {
+            //清空市下拉列表
+            $("#shi").empty();
+            //获取省份code
+            var pCode = $("#sheng").val();
+            $.ajax({
+                type: "post",
+
+                url: "/Cheng/GetCity/" + pCode,
+                dataType: "json",
+                success: function (result) {
+                    //遍历JSON数组
+                    $.each(result, function (i, item) {
+                        //获取实际值
+                        var value = item.code;
+                        //获取显示值
+                        var text = item.name;
+                        //在省下拉列表中追加<option>选项
+                        $("#shi").append("<option value='" + value + "'>" + text + "</option>");
+                    });
+                }
+
+
+
+            });
+        }
+        //省下拉列表的选中改变事件
+        $("#sheng").change(function () {
+            GetCity();
+        });
+    });
+</script>
+<div id="xinxikuang">
+    <div class="biaoxinxi" id="biaokuai">
+        @using (Ajax.BeginForm("AccountSettings", "Cheng", new AjaxOptions
+        {
+            HttpMethod = "post",
+            InsertionMode = InsertionMode.Replace
+        }))
+        {
+            <table style="text-align:center;" id="zhanghao_xiangqingxinxi">
+                <tr>
+                    <td>登录名：</td>
+                    <td>@Html.Label("user_email")</td>
+                </tr>
+                <tr>
+                    <td>昵称：</td>
+                    <td>@Html.TextBox("user_name")</td>
+                </tr>
+                <tr>
+                    <td>真实姓名：</td>
+                    <td>@Html.TextBox("userinfo_realname")</td>
+                </tr>
+                <tr>
+                    <td>所在地：</td>
+                    <td>
+
+                        <select id="sheng" name="sheng"><option>--请选择城市--</option></select> <select id="shi" name="shi"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>性别：</td>
+                    <td><input type="radio" name="userinfo_sex" value="男" />男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="userinfo_sex" value="女" />女</td>
+                </tr>
+                <tr>
+                    <td>生日：</td>
+                    <td>
+                        <input type="date" name="userinfo_birthday" id="shijian" />
+                    </td>
+
+                </tr>
+
+
+                <tr>
+                    <td>联系邮箱：</td>
+                    <td>@Html.Label("userinfo_email")<a href="#" style="padding-left:80px;text-decoration:none;">修改</a></td>
+                </tr>
+                <tr>
+                    <td>QQ：</td>
+                    <td>@Html.TextBox("userinfo_qqnumber")</td>
+                </tr>
+
+                <tr>
+                    <td>一句话介绍：</td>
+                    <td>@Html.TextBox("userinfo_intro")</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <input type="submit" value="保存" id="baocun" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
 

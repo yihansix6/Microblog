@@ -2,14 +2,142 @@
 @{
     Layout = null;
 }
+@using System.Web.Caching;
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    @*<script src="~/Scripts/jquery.validate.js"></script>
+
+        <script src="~/Scripts/jquery.metadata.js"></script>
+        <script src="~/Scripts/jquery.validate.messages_cn.js"></script>*@
+    @*<script src="~/Scripts/additional-methods.js"></script>*@
     <link href="~/Content/ChengRegister.css" rel="stylesheet" />
     <title>Register</title>
+    <style type="text/css">
+        #tishi {
+            border: none;
+            vertical-align: top;
+            margin-top: 5px;
+        }
+    </style>
     <script type="text/javascript">
+        $(function () {
+            //表单验证
+            //$("#user_email").blur(function () {
+            //    var reg = new RegExp(/^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@*@*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})/");
+                //var emai = $("#user_email").val();
+                //if (reg.test(emai)) {
+                //    //通过
+                //    console.log(1);
+                //}
+
+
+            //});
+            //确认密码
+            $("#querenmima").blur(function () {
+
+                var mima = $("#user_password").val();
+                var mima2 = $("#querenmima").val();
+
+                if (mima == mima2) {
+                    $("#mim").hide();
+                }
+                else {
+                    $("#mim").show();
+                }
+            });
+            //验证码比对
+            $("#yanzhengma").blur(function () {
+                //异步请求
+                Checkyanzhengma();
+            });
+            $("#zhuceanniu").click(function () {
+                //判断服务条款是否选中提交
+                //alert(1);
+                var youxiang = $("#user_email").val();
+                var nicheng = $("#user_name").val();
+                var mima = $("#user_password").val();
+                var queren = $("#querenmima").val();
+                var yanzhengma = $("#yanzhengma").val();
+                if (youxiang != "") {
+                    if (nicheng != "") {
+                        if (mima != "") {
+                            if (queren != "") {
+                                if (yanzhengma!="") {
+                                    if (wufu() != false) {
+                                        console.log(tag);
+                                        console.log(wufu());
+                                        if (tag == 1 && wufu()) {
+                                            // 提交//表单
+                                            //alert('提交表单');
+                                            $("#biaodan").submit();
+                                        }
+                                        else {
+
+                                            //alert('不提交表单');
+
+                                            //提交取消
+                                            alert("数据有误");
+                                            event.preventDefault();
+                                        }
+                                    } else {
+                                        alert("请勾选服务条款");
+                                    }
+                                } else {
+                                    alert("请输入验证码");
+                                }
+                            } else {
+                                alert("确认密码不能为空");
+                            }
+                        } else {
+                            alert("请输入密码");
+                        }
+                    } else {
+                        alert("请输入昵称");
+                    }
+
+                } else {
+                    alert("请输入邮箱");
+                }
+
+            });
+        });
+        //验证服务条款
+        function wufu() {
+            if ($("#fuxuan").prop("checked") == true) {
+                console.log("通过条款");
+                return true;
+            }
+            if ($("#fuxuan").prop("checked") == false) {
+                console.log("不通过条款");
+                return false;
+            }
+        }
+        //验证验证码
+        var tag;
+        function Checkyanzhengma() {
+            $.ajax({
+                url: "/Cheng/CheckCode",
+                type: "post",
+                data: { "yanzhengma": $("#yanzhengma").val() },
+                success: function (result) {
+                    if (result == "0") {
+                        console.log("不通过验证码");
+                        $("#tishi").show();
+                        $("#tishi").attr("src", "/resource/cuo.png");
+                        tag = 0;
+                    } else if (result == "1") {
+                        console.log("通过验证码");
+                        $("#tishi").show();
+                        $("#tishi").attr("src", "/resource/dui.png");
+                        tag = 1;
+                    }
+                }
+            });
+        }
 
     </script>
 </head>
@@ -22,45 +150,49 @@
             <div id="zhobuzhucemokuai">
                 <div class="zhobuzhucemokuai_yi">
                     <div class="zhobuzhucemokuai_yi_yidong">
-                        @using (Ajax.BeginForm("Login", "Cheng", new AjaxOptions
+                        @using (Ajax.BeginForm("Register", "Cheng", new AjaxOptions
                         {
                             HttpMethod = "post",
                             InsertionMode = InsertionMode.Replace
 
-                        }))
+                        }, new { id = "biaodan" }))
                         {
                             <table class="zhobuzhucemokuai_yi_biao">
                                 <tr>
                                     <td class="biaoming">电子邮箱</td>
-                                    <td>@Html.TextBox("user_email")@Html.ValidationMessage("user_email")</td>
+                                    <td>@Html.TextBox("user_email")@Html.ValidationMessage("user_email", new { style = "color:red;" })<span id="user_emailMsg"></span></td>
                                 </tr>
                                 <tr>
                                     <td class="biaoming">创建名称</td>
-                                    <td>@Html.TextBox("user_name")@Html.ValidationMessage("user_name")</td>
+                                    <td>@Html.TextBox("user_name")@Html.ValidationMessage("user_name", new { style = "color:red;" })</td>
                                 </tr>
                                 <tr>
                                     <td class="biaoming">创建密码</td>
-                                    <td>@Html.Password("user_password")@Html.ValidationMessage("user_password")</td>
+                                    <td>@Html.Password("user_password")@Html.ValidationMessage("user_password", new { style = "color:red;" })</td>
                                 </tr>
                                 <tr>
                                     <td class="biaoming">确认密码</td>
-                                    <td>@Html.Password("querenmima")</td>
+                                    <td>@Html.Password("querenmima")@Html.ValidationMessage("querenmima", new { style = "color:red;" })<span style="display:none;color:red;" id="mim">确认密码不一致</span></td>
+
                                 </tr>
+
                                 <tr>
                                     <td class="biaoming">验证码</td>
                                     <td>
-                                        @Html.TextBox("yanzhengma")<img id="verifycode" class="yanzhengma" style="height: 30px;width: 108px;margin-left: -15px;margin-top: -8px;cursor: pointer;" src="@Url.Action("VerifyCode")" />
+                                        @Html.TextBox("yanzhengma")<img id="verifycode" class="yanzhengma" style="height: 30px;width: 108px;margin-left: -15px;margin-top: -8px;cursor: pointer;" src="@Url.Action("VerifyCode")" /><span @*style="display:none;"*@><img id="tishi" style="width:50px;height:50px;display:none" /></span>
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td>@Html.CheckBox("mi")我已看过并同意<span class="tiaokuan">《服务使用协议》</span></td>
+                                    <td>@Html.CheckBox("fuxuan")我已看过并同意<span class="tiaokuan"><a href="https://www.baidu.com/">《服务使用协议》</a></span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="text-align:center;"><input type="submit" value="立即注册" class="tijiaobiaodan" /></td>
+                                    <td colspan="2" style="text-align:center;"><input type="button" value="立即注册" class="tijiaobiaodan" id="zhuceanniu" /></td>
                                 </tr>
+
                             </table>
+
                         }
                     </div>
 

@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "xiugai";
+    Layout = "~/Views/Shared/_Account Settings.cshtml";
+}
+@using Microblog.Models
+<link href="~/Content/Chengxinxi.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //判断原密码
+        $("#user_dangqirenmima").blur(function () {
+            querenyuanmima();
+
+        })
+        //确认密码
+        $("#user_xinmima").blur(function () {
+            querenmima();
+        });
+
+
+        $("#baocun").click(function () {
+            var zhiyi = $("#user_dangqirenmima").val();
+
+            var zhier = $("#user_password").val();
+
+            var zhisan = $("#user_xinmima").val();
+            if (zhiyi != "") {
+                if (zhier != "") {
+                    if (zhisan != "") {
+                        if (querenyuanmima() != 1) {
+                            if (querenmima() != false) {
+                                if (panzhi == 0 && querenmima()) {
+                                    alert(1);
+                                    $("#biaodan2").submit();
+                                } else {
+                                    alert("数据异常");
+                                }
+                            } else {
+                                alert("输入两者密码不一致");
+                            }
+                        } else {
+                            alert("请检查原密码");
+                        }
+                    } else {
+                        alert("请输入确认密码");
+                    }
+                } else {
+                    alert("请输入新密码");
+                }
+            } else {
+                alert("请输入原密码");
+            }
+        })
+
+    })
+    //验证当前密码
+
+
+    function querenmima() {
+
+        var mima = $("#user_password").val();
+        var mima2 = $("#user_xinmima").val();
+
+        if (mima == mima2) {
+            $("#mim").hide();
+            console.log("通过验证");
+            return true;
+        }
+        else {
+            $("#mim").show();
+            console.log("不通过");
+            return false;
+        }
+    }
+    var panzhi;
+    function querenyuanmima() {
+        var zhi = 1;
+        $.ajax({
+            url: "/Cheng/panduanyunamima/" + zhi,
+            type: "post",
+            data: { "dangqirenmima": $("#user_dangqirenmima").val() },/*传过去的变量名不能同控件名一样不然值为空*/
+            success: function (tishi) {
+                if (tishi == 0) {
+                    $("#mimatishiyi").hide();
+                    $("#mimatishier").show();
+                    panzhi = 0;
+
+                }
+                else if (tishi == 1) {
+
+                    $("#mimatishiyi").show();
+                    $("#mimatishier").hide();
+                    panzhi = 1;
+                }
+            }
+        });
+    }
+</script>
+<div id="xiugaimima">
+    @using (Ajax.BeginForm("xiugai", "Cheng", new AjaxOptions
+    {
+        HttpMethod = "post",
+        InsertionMode = InsertionMode.Replace
+    }, new { id = "biaodan2" }))
+    {
+
+        <table style="text-align:center;" id="zhanghao_xiangqingxinxi" class="xiugaimima_biaodaner">
+            <tr>
+
+                <td>当前密码：</td>
+                <td>
+                    @Html.Password("user_dangqirenmima")
+                </td>
+                <td>
+                    <span style="display:none;color:red;" id="mimatishiyi">密码不正确</span>
+                    <span style="display:none;color:red;" id="mimatishier">密码正确</span>
+                </td>
+            </tr>
+            <tr>
+                <td>新密码：</td>
+                <td>@Html.Password("user_password")</td>
+                <td>@Html.ValidationMessage("user_password", new { style = "color:red;" })</td>
+            </tr>
+            <tr>
+                <td>确认密码：</td>
+                <td>@Html.Password("user_xinmima")</td>
+                <td><span style="display:none;color:red;" id="mim">确认密码不一致</span></td>
+            </tr>
+            <tr> <td>@Html.Hidden("user_id")</td></tr>
+            @*做完登录传id*@
+            <tr>
+                <td colspan="2" style="text-align:center">
+                    <input type="button" value="保存" id="baocun" />
+                </td>
+            </tr>
+        </table>
+
+    }
+</div>
+
+

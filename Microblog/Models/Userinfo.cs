@@ -6,12 +6,12 @@
 //     如果重新生成代码，将覆盖对此文件的手动更改。
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace Microblog.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Userinfo
     {
         public string userinfo_realname { get; set; }
@@ -21,14 +21,17 @@ namespace Microblog.Models
         public Nullable<System.DateTime> userinfo_birthday { get; set; }
         public string userinfo_bloodtype { get; set; }
         public string userinfo_intro { get; set; }
+        [RegularExpression(@"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$", ErrorMessage = "请输入正确邮箱格式")]
         public string userinfo_email { get; set; }
+
+        [RegularExpression(@"[1-9] [0-9]{4,}", ErrorMessage = "请输入正确格式QQ号")]
         public string userinfo_qqnumber { get; set; }
         public string userinfo_profession { get; set; }
         public string userinfo_tag { get; set; }
         public int user_id { get; set; }
         public string user_headphoto { get; set; }
         public string resources_themeurl { get; set; }
-    
+
         public virtual Users Users { get; set; }
     }
 }

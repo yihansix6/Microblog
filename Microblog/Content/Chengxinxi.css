@@ -1,0 +1,122 @@
+﻿body {
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#xinxikuang {
+    width: 70%;
+    height: 700px;
+    /*border: 1px solid red;*/
+    margin: 0px auto;
+    background-color: #ffffff;
+}
+
+.biaoxinxi {
+    width: 80%;
+    height: 100%;
+    margin: 0px auto;
+    /*border: 1px solid red;*/
+}
+
+#zhanghao_xiangqingxinxi {
+    padding-left: 100px;
+    font-size: 20px;
+}
+
+    #zhanghao_xiangqingxinxi tr td {
+        line-height: 60px;
+    }
+
+#user_name {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#userinfo_realname {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#userinfo_email {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#userinfo_qqnumber {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#userinfo_intro {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#baocun {
+    width: 200px;
+    height: 30px;
+    background: linear-gradient(#74c451,#64b340);
+    border: none;
+    color: #ffffff;
+}
+
+#sheng {
+    width: 100px;
+    height: 20px;
+    border: 1px solid #e9eae6;
+}
+
+#shi {
+    width: 100px;
+    height: 20px;
+    border: 1px solid #e9eae6;
+}
+
+#shijian {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+    text-align: center;
+}
+/*修改密码分布视图*/
+#user_dangqirenmima {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#user_xinmima {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#user_password {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #e9eae6;
+}
+
+#xiugaimima {
+    width: 70%;
+    height: 300px;
+    /*border: 1px solid red;*/
+    margin: 0px auto;
+    background-color: #ffffff;
+}
+
+#xiugaimima_biaodan {
+    margin: 0px auto;
+}
+.xiugaimima_biaodaner{
+    padding-left:200px;
+    text-align:center;
+}

@@ -6,12 +6,12 @@
 //     如果重新生成代码，将覆盖对此文件的手动更改。
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace Microblog.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,13 +23,18 @@ namespace Microblog.Models
             this.Relation = new HashSet<Relation>();
             this.Transpond = new HashSet<Transpond>();
         }
-    
+
         public int user_id { get; set; }
+        [Required(ErrorMessage = "用户邮箱不能为空")]
+        [RegularExpression(@"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$", ErrorMessage = "请输入正确邮箱格式")]
         public string user_email { get; set; }
+        [Required(ErrorMessage = "用户密码不能为空")]
+        [StringLength(20, MinimumLength = 6, ErrorMessage = "密码最少6位，最多20位")]
         public string user_password { get; set; }
+        [Required(ErrorMessage = "用昵称不能为空")]
         public string user_name { get; set; }
         public System.DateTime user_time { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Collections> Collections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
