@@ -16,7 +16,6 @@ namespace Microblog.Models
     {
         public int collections_id { get; set; }
         public Nullable<System.DateTime> collections_time { get; set; }
-        public bool collections_status { get; set; }
         public int user_id { get; set; }
         public int messages_id { get; set; }
     

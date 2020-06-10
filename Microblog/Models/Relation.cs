@@ -16,12 +16,12 @@ namespace Microblog.Models
     {
         public int relation_id { get; set; }
         public Nullable<System.DateTime> relation_time { get; set; }
-        public int friendGroup_id { get; set; }
-        public int user_id { get; set; }
-        public int user_byid { get; set; }
+        public Nullable<int> user_id { get; set; }
+        public Nullable<int> user_byid { get; set; }
+        public Nullable<int> user_guanzhu { get; set; }
     
-        public virtual FriendGroup FriendGroup { get; set; }
         public virtual Users Users { get; set; }
         public virtual Users Users1 { get; set; }
+        public virtual Users Users2 { get; set; }
     }
 }

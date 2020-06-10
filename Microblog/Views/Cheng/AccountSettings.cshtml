@@ -1,13 +1,15 @@
-﻿
+﻿@model Microblog.Models.Userinfo
+
 @{
     ViewBag.Title = "AccountSettings";
     Layout = "~/Views/Shared/_Account Settings.cshtml";
 }
+@using Microblog.Models;
+
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        //设置默认时间
-        $("#shijian").val();
+
         //获取所有的省
         $.ajax({
             type: "post",
@@ -74,7 +76,8 @@
             <table style="text-align:center;" id="zhanghao_xiangqingxinxi">
                 <tr>
                     <td>登录名：</td>
-                    <td>@Html.Label("user_email")</td>
+
+                    <td><label name="userinfo_email">@Model.userinfo_email</label> </td>
                 </tr>
                 <tr>
                     <td>昵称：</td>
@@ -88,7 +91,7 @@
                     <td>所在地：</td>
                     <td>
 
-                        <select id="sheng" name="sheng"><option>--请选择城市--</option></select> <select id="shi" name="shi"></select>
+                        <select id="sheng" name="sheng"></select> <select id="shi" name="shi"></select>
                     </td>
                 </tr>
                 <tr>
@@ -106,11 +109,12 @@
 
                 <tr>
                     <td>联系邮箱：</td>
-                    <td>@Html.Label("userinfo_email")<a href="#" style="padding-left:80px;text-decoration:none;">修改</a></td>
+                    <td><label name="userinfo_email">@Model.userinfo_email</label><a href="/Cheng/xiugaiyouxiang/@Model.user_id" style="padding-left:80px;text-decoration:none;">修改</a></td>
                 </tr>
                 <tr>
                     <td>QQ：</td>
                     <td>@Html.TextBox("userinfo_qqnumber")</td>
+                    <td>@Html.ValidationMessage("userinfo_qqnumber", new { style = "color:red;" })</td>
                 </tr>
 
                 <tr>

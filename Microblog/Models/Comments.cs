@@ -16,7 +16,6 @@ namespace Microblog.Models
     {
         public int comments_id { get; set; }
         public string comments_info { get; set; }
-        public string comments_infostate { get; set; }
         public Nullable<System.DateTime> comments_time { get; set; }
         public int messages_id { get; set; }
         public int user_id { get; set; }

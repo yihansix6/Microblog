@@ -26,7 +26,6 @@
         <MappingFragment StoreEntitySet="Collections">
           <ScalarProperty Name="collections_id" ColumnName="collections_id" />
           <ScalarProperty Name="collections_time" ColumnName="collections_time" />
-          <ScalarProperty Name="collections_status" ColumnName="collections_status" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="messages_id" ColumnName="messages_id" />
         </MappingFragment>
@@ -37,18 +36,9 @@
         <MappingFragment StoreEntitySet="Comments">
           <ScalarProperty Name="comments_id" ColumnName="comments_id" />
           <ScalarProperty Name="comments_info" ColumnName="comments_info" />
-          <ScalarProperty Name="comments_infostate" ColumnName="comments_infostate" />
           <ScalarProperty Name="comments_time" ColumnName="comments_time" />
           <ScalarProperty Name="messages_id" ColumnName="messages_id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FriendGroup">
-      <EntityTypeMapping TypeName="MicroblogDBModel.FriendGroup">
-        <MappingFragment StoreEntitySet="FriendGroup">
-          <ScalarProperty Name="friendGroup_id" ColumnName="friendGroup_id" />
-          <ScalarProperty Name="friendGroup_type" ColumnName="friendGroup_type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -56,23 +46,13 @@
       <EntityTypeMapping TypeName="MicroblogDBModel.Messages">
         <MappingFragment StoreEntitySet="Messages">
           <ScalarProperty Name="messages_id" ColumnName="messages_id" />
-          <ScalarProperty Name="messagesType_id" ColumnName="messagesType_id" />
           <ScalarProperty Name="messages_info" ColumnName="messages_info" />
           <ScalarProperty Name="messages_time" ColumnName="messages_time" />
           <ScalarProperty Name="messages_collectnum" ColumnName="messages_collectnum" />
           <ScalarProperty Name="messages_commentnum" ColumnName="messages_commentnum" />
           <ScalarProperty Name="messages_transpondnum" ColumnName="messages_transpondnum" />
-          <ScalarProperty Name="messages_readnum" ColumnName="messages_readnum" />
-          <ScalarProperty Name="resources_url" ColumnName="resources_url" />
+          <ScalarProperty Name="messages_key" ColumnName="messages_key" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MessagesType">
-      <EntityTypeMapping TypeName="MicroblogDBModel.MessagesType">
-        <MappingFragment StoreEntitySet="MessagesType">
-          <ScalarProperty Name="messagesType_id" ColumnName="messagesType_id" />
-          <ScalarProperty Name="messagesType_info" ColumnName="messagesType_info" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -90,9 +70,9 @@
         <MappingFragment StoreEntitySet="Relation">
           <ScalarProperty Name="relation_id" ColumnName="relation_id" />
           <ScalarProperty Name="relation_time" ColumnName="relation_time" />
-          <ScalarProperty Name="friendGroup_id" ColumnName="friendGroup_id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="user_byid" ColumnName="user_byid" />
+          <ScalarProperty Name="user_guanzhu" ColumnName="user_guanzhu" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -103,6 +83,7 @@
           <ScalarProperty Name="messages_id" ColumnName="messages_id" />
           <ScalarProperty Name="transpond_users_id" ColumnName="transpond_users_id" />
           <ScalarProperty Name="transpond_betime" ColumnName="transpond_betime" />
+          <ScalarProperty Name="transpond_info" ColumnName="transpond_info" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -137,6 +118,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_xiugai" FunctionName="MicroblogDBModel.Store.usp_xiugai" />
+    <FunctionImportMapping FunctionImportName="usp_xiugaier" FunctionName="MicroblogDBModel.Store.usp_xiugaier" />
     <FunctionImportMapping FunctionImportName="usp_zhucetianjia" FunctionName="MicroblogDBModel.Store.usp_zhucetianjia" />
   </EntityContainerMapping>
 </Mapping>

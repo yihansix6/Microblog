@@ -47,7 +47,6 @@
                 color: #53a9d9;
             }
 
-
 #sousuokuamg {
     width: 100%;
     height: 100px;
@@ -97,7 +96,45 @@
     color: #329cd5;
 }
 
-.tijiaobiaodan {
+
+
+#content {
+    width: 70%;
+    height: 2500px;
+    background-color: white;
+    margin: 0 auto;
+}
+#left {
+    float: left;
+    width: 73%;
+    height: 100%;
+}
+#left-top{
+    height:300px;
+}
+#headphoto {
+    float: left;
+    margin: 24px 0 0 24px;
+}
+    #headphoto img{
+        width:240px;
+        height:240px;
+    }
+#messagesinfo {
+    float: left;
+}
+    #messagesinfo p {
+        margin: 36px 0 0 20px;
+    }
+    #messagesinfo h3{
+        margin:36px 0 0 20px;
+    }
+
+#faweibo {
+    float: right;
+    margin:36px 20px 0 0;
+}
+.fabu {
     width: 120px;
     height: 35px;
     border-radius: 5px;
@@ -106,57 +143,190 @@
     color: #ffffff;
     font-size: 15px;
     position: relative;
-    left: 42%;
+    left: 75%;
+    margin-top: 39px;
 }
 
-#content {
-    width: 72%;
-    height: 1000px;
-    background-color: white;
-    margin: 0 auto;
+
+#left-buttom{
+    height:1000px;
 }
 
-#left {
+
+
+.showWeibo {
+    border-bottom: dashed;
+    margin-bottom: 8px;
+    background-color:darkgray;
+}
+
+.showWeibotop {
+    margin-left:6%;
+}
+
+    .showWeibotop img {
+        height: 50px;
+        width: 50px;
+    }
+
+.showWeibobuttom {
+    margin-top: 40px;
+    margin-left: 120px;
+    height: 35px;
+}
+
+    .showWeibobuttom span {
+        margin-right: 250px;
+    }
+
+    .showWeibobuttom a {
+        margin: 0 10px;
+    }
+
+
+.shiyongweiboderen {
+    width: 100%;
+    height: 200px;
+    /*border:1px solid red;*/
+}
+
+.touxiang {
+    /*border:1px solid red;*/
+    margin-top: 10px;
     float: left;
-    height: 100%;
 }
+
+    .touxiang dl {
+        padding-left: 10px;
+        padding-top: 10px;
+        text-align: center;
+    }
+
+        .touxiang dl dd {
+            line-height: 20px;
+        }
+
+
+.isHide {
+    display: none;
+}
+
+.pinglun {
+    width: 580px;
+    height: 200px;
+    border: 1px solid red;
+    float: right;
+    margin-right: 38px;
+}
+
+.pinglun_top {
+    height: 80px;
+    border-bottom: dashed;
+}
+
+.pinglunkuang {
+    width: 390px;
+    height: 26px;
+    margin: 20px 0 0 60px;
+}
+
+.pinglunanniu {
+    width: 100px;
+    height: 30px;
+    margin: 20px 0 0 10px;
+}
+
+.pinglun_buttom {
+}
+
+    .pinglun_buttom img {
+        width: 50px;
+        height: 50px;
+    }
+
+
+/*弹出框*/
+
+.kuangkuang {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    opacity: 0.98;
+    z-index: 99999;
+}
+.zhezhao {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    opacity: 0.88;
+    z-index: 99999;
+}
+
+.tankuang {
+    position: relative;
+    background: #fff;
+    width: 40%;
+    height: 55%;
+    border-radius: 5px;
+    margin: 10% auto;
+}
+
+#header {
+    height: 40px;
+}
+
+#header-right {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    background: red;
+    color: #fff;
+    right: 5px;
+    top: 5px;
+    text-align: center;
+}
+
+/*弹出框*/
+
+
+
 
 #right {
     float: right;
+    width: 27%;
     height: 100%;
     background-color: lightblue;
 }
 
-.headphoto {
-    width: 70px;
-    height: 70px;
-    margin-top: 20px;
-    margin-left: 20px;
-}
-.infodesc {
-    float: right;
-    margin-right: 50px;
-    margin-top: 30px;
+#guanzhu {
+    margin-top: 50px;
+    height: 50px;
 }
 
-#guanzhu{
-    margin-top:30px;
-    height:50px;
-}
 #yi {
     padding-bottom: 30px;
-    margin-left: 20px;
+    margin-left: 42px;
 }
+
 #er {
     padding-bottom: 30px;
     margin-left: 10px;
 }
+
 #wuxu_er {
     width: 200px;
     height: 50px;
     margin-top: 20px;
     margin: 0px auto;
 }
+
 #yi li {
     list-style: none;
     float: left;
@@ -168,6 +338,7 @@
     font-weight: bold;
     margin-left: 30px;
 }
+
 #er li {
     list-style: none;
     float: left;
@@ -180,23 +351,30 @@
 }
 
 
-#textlable {
-    margin:30px 0 0 30px;
+#myfan{
+    margin:42px 0 0 30px;
 }
-    #textlable p {
-        margin-bottom: 15px;
-        color: #4ca4cc;
-    }
-    #textlable p a:hover {
-        text-decoration: underline;
+.shiyongweiboderen {
+    width: 100%;
+    height: 200px;
+    /*border:1px solid red;*/
+}
+
+#myguanzhu {
+    margin-left:30px;
+}
+.touxiang {
+    /*border:1px solid red;*/
+    margin-top: 10px;
+    float: left;
+}
+
+    .touxiang dl {
+        padding-left: 10px;
+        padding-top: 10px;
+        text-align: center;
     }
 
-#myfan, #myguanzhu {
-    font-size: 22px;
-    color: white;
-    margin: 20px 0 0 30px;
-}
-    #myfan a:hover, #myguanzhu:hover {
-        text-decoration: underline;
-    }
-
+        .touxiang dl dd {
+            line-height: 20px;
+        }

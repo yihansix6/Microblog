@@ -21,10 +21,10 @@ namespace Microblog.Models
         public Nullable<System.DateTime> userinfo_birthday { get; set; }
         public string userinfo_bloodtype { get; set; }
         public string userinfo_intro { get; set; }
-        [RegularExpression(@"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$", ErrorMessage = "请输入正确邮箱格式")]
+
         public string userinfo_email { get; set; }
 
-        [RegularExpression(@"[1-9] [0-9]{4,}", ErrorMessage = "请输入正确格式QQ号")]
+        [RegularExpression(@"^\d{6,10}$", ErrorMessage = "请输入正确格式QQ号")]
         public string userinfo_qqnumber { get; set; }
         public string userinfo_profession { get; set; }
         public string userinfo_tag { get; set; }

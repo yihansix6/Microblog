@@ -4,27 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7298f511b56f4707ad6553ef151e7a03" Name="Diagram1">
-        <EntityTypeShape EntityType="MicroblogDBModel.area" Width="1.5" PointX="0.875" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.city" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Collections" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Comments" Width="1.5" PointX="6" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.FriendGroup" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Messages" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.MessagesType" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.province" Width="1.5" PointX="4.875" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Relation" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Transpond" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Userinfo" Width="1.5" PointX="3" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MicroblogDBModel.Users" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+      <Diagram DiagramId="53fd843f25cf43e88f3aaf7505d251a5" Name="Diagram1">
+        <EntityTypeShape EntityType="MicroblogDBModel.area" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.city" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Collections" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Comments" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Messages" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.province" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Relation" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Transpond" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Userinfo" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MicroblogDBModel.Users" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
         <AssociationConnector Association="MicroblogDBModel.FK_Collections_Messages" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Collections_Users" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Comments_Messages" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Comments_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="MicroblogDBModel.FK_Relation_FriendGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="MicroblogDBModel.FK_Messages_MessagesType" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Messages_Users" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Transpond_Messages" ManuallyRouted="false" />
+        <AssociationConnector Association="MicroblogDBModel.FK_Relation_Users" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Relation_Users2" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Relation_Users3" ManuallyRouted="false" />
         <AssociationConnector Association="MicroblogDBModel.FK_Transpond_Users" ManuallyRouted="false" />

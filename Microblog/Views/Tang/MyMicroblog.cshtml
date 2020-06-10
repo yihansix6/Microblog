@@ -1,6 +1,239 @@
-﻿
+﻿@using Microblog.Models
 @{
     ViewBag.Title = "MyMicroblog";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Homepage.cshtml";
 }
-<link href="~/Content/TangMyMicroblog.css" rel="stylesheet" />
+
+    <div id="content">
+        <div id="left">
+            <div id="left-top">
+                <div id="headphoto">
+                    <img src="@ViewData["mHeadphoto"]" />
+                </div>
+                <div id="messagesinfo">
+                    <h3>@ViewData["mname"]</h3>
+                    <p>@ViewData["maddress"]</p>
+                </div>
+                <p id="faweibo" onclick="dianwo()">我要发微博</p>
+                <div class="kuangkuang" id='kuangkuang'>
+                    <div class="tankuang">
+                        <div class="weibotext">
+                            <input type="button" value="发布" class="fabu" id="gettext" onclick="addWeibo()" />
+                            <div id="editor"></div>
+                        </div>
+                        <div id="header">
+                            <div id="header-right" onclick="hidder()">x</div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    document.getElementById('kuangkuang').style.display = "none";
+                    function dianwo() {
+                        document.getElementById('kuangkuang').style.display = "";
+                    }
+                    function hidder() {
+                        document.getElementById('kuangkuang').style.display = "none";
+                    }
+
+                    var E = window.wangEditor
+                    var editor = new E('#editor')
+                    editor.customConfig.menus = [
+                        'emoticon',
+                        'image',
+                        'video'
+                    ]
+                    editor.customConfig.customUploadImg = function (files, insert) {//对上传的图片进行处理，图片上传的方式
+                        var data = new FormData()
+                        data.append("img", files[0])
+                        $.ajax({
+                            url: "@Url.Action("ProcessImage")",
+                            type: "post",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            success: function (result) {
+                                insert(result);
+                            },
+                            error: function () {
+                                alert("图片上传失败")
+                            }
+                        })
+                    }
+                    editor.create()
+                    function addWeibo() {
+                        var text = editor.txt.html();
+                        alert(text);
+                        $.ajax({
+                            url: "@Url.Action("Addweibo")",
+                            type: "post",
+                            data: { Text: text },
+                            success: function (response) {
+                                alert(response);
+                                window.location.href = "/Tang/MyMicroblog"
+                            }, error: function () {
+                                alert("添加成功");
+                            }
+                        });
+                    }
+                </script>
+
+            </div>
+            <div id="left-mid"></div>
+            <div id="left-buttom">
+                @foreach (var item in Model as List<Microblog.Models.Messages>)
+                {
+                    <div class="showWeibo">
+                        @foreach (var zfwb in item.Transpond)
+                        {
+                            if (zfwb.transpond_users_id == item.user_id)
+                            {
+                                
+                            }
+                        }
+                        <div class="showWeibotop">
+                            <span>@item.Users.user_name：</span>
+                            <span>@Html.Raw(item.messages_info)</span>
+                        </div>
+                        <div class="showWeibobuttom">
+                            <p><span>@item.messages_time</span><a onclick="DelWeibo(@item.messages_id)">删除</a>|<a onclick="zhuanfa('@item.messages_key')">转发</a>|<a href="/Tang/MyShouCang/@item.messages_id">收藏</a>|<a onclick="pinglun('@item.messages_id');">评论</a></p>
+                        </div>
+
+
+                        @*转发框*@
+                        @using (Html.BeginForm("AddZhuanfa", "Tang", "post"))
+                        {
+                            <div class="zhezhao" id='@item.messages_key'>
+                                <div class="tankuang">
+                                    <div id="header">
+                                        <div class="zhuanfa-top">
+                                            <span>@item.Users.user_name：</span>
+                                            <span>@Html.Raw(item.messages_info)</span>
+                                        </div>
+                                        <div class="zhuanfa-buttom">
+                                            <input type="text" name="zhuanfawenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
+                                        </div>
+                                        <div id="header-right" onclick="zhuanfa('@item.messages_key')">x</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        @*评论框*@
+                        @using (Html.BeginForm("AddPinglun", "Tang", "post"))
+                        {
+                            <div class="pinglun" id="@item.messages_id">
+                                <div class="pinglun_top">
+                                    <input type="text" style="display:none;" name="messagesid" value="@item.messages_id" />
+                                    <input type="text" name="pinglunwenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
+                                </div>
+                                @foreach (var lie in item.Comments)
+                                {
+                                    <div class="pinglun_buttom">
+                                        <img src="@lie.Users.Userinfo.user_headphoto" />
+                                        <span>@lie.Users.user_name</span>
+                                        <span>@lie.comments_info</span>
+                                        <span>@lie.comments_time</span>
+                                    </div>
+                                }
+
+
+                            </div>
+                            <div style="clear:both;"></div>
+                        }
+                    </div>
+                    <script>
+                        function DelWeibo(id) {
+                            if (confirm("确定删除吗？")) {
+                                window.location.href = "/Tang/MyDelweibo/" + id;
+                            }
+                        }
+                        $(function () {
+                            $("#@item.messages_id").addClass("isHide");
+                            $("#@item.messages_key").addClass("isHide");
+                            sessionStorage.setItem("plkey", "true");
+                            sessionStorage.setItem("zfkey", "true");
+                        });
+                        function pinglun(id) {
+                            var plkey = sessionStorage.getItem("plkey");
+                            if (plkey == "true") {
+                                $("#" + id).removeClass("isHide");
+                                sessionStorage.setItem("plkey", "false");
+                            } else {
+                                $("#" + id).addClass("isHide");
+                                sessionStorage.setItem("plkey", "true");
+                            }
+                        }
+
+                        function zhuanfa(id) {
+                            var zfkey = sessionStorage.getItem("zfkey");
+                            if (zfkey == "true") {
+                                $("#" + id).removeClass("isHide");
+                                sessionStorage.setItem("zfkey", "false");
+                            } else {
+                                $("#" + id).addClass("isHide");
+                                sessionStorage.setItem("zfkey", "true");
+                            }
+                        }
+                    </script>
+                }
+            </div>
+        </div>
+        <div id="right">
+            <div id="guanzhu">
+                <ul id="yi">
+                    <li><a>@ViewData["guanzhu"]</a></li>
+                    <li><a>@ViewData["fansi"]</a></li>
+                    <li><a>@ViewData["weibocount"]</a></li>
+                </ul>
+                <div id="wuxu_er">
+                    <ul id="er">
+                        <li><a>关注</a></li>
+                        <li><a>粉丝</a></li>
+                        <li><a>微博</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="biaoqian">
+                <div id="biaoqian_info"></div>
+                @* 待做 *@
+            </div>
+
+            <div id="myfan">
+                <p><a>我的粉丝(@ViewData["fansi"])</a></p>
+                <div class="shiyongweiboderen">
+                    @foreach (var item in ViewData["fansiHeadphoto"] as List<Users>)
+                    {
+                        <div class="touxiang">
+                            <dl>
+                                <dd>
+                                    @if (item.Userinfo.user_headphoto == null)
+                                    {<img src="~/resource/arrowall.gif" style="width:55px;height:55px;" /> }
+                                    else
+                                    {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
+                                </dd>
+                                <dt style="font-size:16px;">@item.user_name</dt>
+                            </dl>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div id="myguanzhu">
+                <p><a>我关注的(@ViewData["guanzhu"])</a></p>
+                @foreach (var item in ViewData["guanzhuHedaphoto"] as List<Users>)
+                {
+                    <div class="touxiang">
+                        <dl>
+                            <dd>
+                                @if (item.Userinfo.user_headphoto == null)
+                                {<img src="~/resource/arrowall.gif" style="width:55px;height:55px;" /> }
+                                else
+                                {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
+                            </dd>
+                            <dt style="font-size:16px;">@item.user_name</dt>
+                        </dl>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>

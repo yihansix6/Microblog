@@ -23,21 +23,18 @@ namespace Microblog.Models
         }
     
         public int messages_id { get; set; }
-        public Nullable<int> messagesType_id { get; set; }
         public string messages_info { get; set; }
         public Nullable<System.DateTime> messages_time { get; set; }
         public Nullable<int> messages_collectnum { get; set; }
         public Nullable<int> messages_commentnum { get; set; }
         public Nullable<int> messages_transpondnum { get; set; }
-        public Nullable<int> messages_readnum { get; set; }
-        public string resources_url { get; set; }
+        public string messages_key { get; set; }
         public int user_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Collections> Collections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comments> Comments { get; set; }
-        public virtual MessagesType MessagesType { get; set; }
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transpond> Transpond { get; set; }

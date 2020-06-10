@@ -1,0 +1,108 @@
+﻿@using Microblog.Models
+@model Microblog.Models.Users
+@{
+    ViewBag.Title = "xiugaiyouxiang";
+    Layout = "~/Views/Shared/_Account Settings.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #xiugaiyouxiang {
+        width: 70%;
+        height: 300px;
+        /*border: 1px solid red;*/
+        margin: 0px auto;
+        background-color: #ffffff;
+    }
+
+    #weiboyouxiangxiugai {
+        text-decoration: none;
+        display: block;
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid #8bbe39;
+        background: linear-gradient(#94d825,#5d9f05);
+        border-radius: 5px;
+        text-align: center;
+        margin: 20px auto;
+    }
+
+    #weiboyouxiang_xiugai {
+        padding-left: 300px;
+        padding-top: 50px;
+        text-align: center;
+    }
+
+    #youxiang {
+        width: 200px;
+        height: 30px;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        //邮箱判断
+        $("#youxiang").blur(function () {
+            //alert(1);
+            yanzhengyouxiang();
+        })
+
+        $("#weiboyouxiangxiugai").click(function () {
+
+            var zhiyi = $("#youxiang").val();
+            if (zhiyi != "") {
+                if (yanzhengyouxiang()) {
+                    $("#biaodan").submit();
+                } else {
+                    alert("请确保邮箱正确");
+                }
+
+            } else {
+                alert("请输入邮箱");
+            }
+        })
+    })
+    function yanzhengyouxiang() {
+        var youxiangyanzheng = /\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+        var shuju = $("#youxiang").val();
+
+        if (!youxiangyanzheng.test(shuju)) {
+            $(".cuowuxinxi").show();
+            return false;
+        } else {
+            $(".cuowuxinxi").hide();
+            return true;
+        }
+    }
+</script>
+<div id="xiugaiyouxiang">
+    <form action="/Cheng/xiugaiyouxiang" method="post" id="biaodan">
+        <table id="weiboyouxiang_xiugai">
+            <tr>
+                <td>原邮箱:</td>
+                <td>
+                    <label name="user_email">@Model.user_email</label>
+                </td>
+
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td>@Html.TextBox("youxiang")<span style="display:none;color:red;">请输入正确的邮箱格式</span></td><td><span style="display:none;color:#ff0000;" class="cuowuxinxi">请输入正确邮箱格式</span></td>
+            </tr>
+            <tr>
+                <td>@Html.Hidden("user_id")</td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" value="修改" id="weiboyouxiangxiugai" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+

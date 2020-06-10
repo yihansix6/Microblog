@@ -18,6 +18,7 @@ namespace Microblog.Models
         public int messages_id { get; set; }
         public int transpond_users_id { get; set; }
         public Nullable<System.DateTime> transpond_betime { get; set; }
+        public string transpond_info { get; set; }
     
         public virtual Messages Messages { get; set; }
         public virtual Users Users { get; set; }

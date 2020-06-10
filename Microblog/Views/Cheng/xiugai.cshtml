@@ -31,7 +31,7 @@
                         if (querenyuanmima() != 1) {
                             if (querenmima() != false) {
                                 if (panzhi == 0 && querenmima()) {
-                                    alert(1);
+                                    //alert(1);
                                     $("#biaodan2").submit();
                                 } else {
                                     alert("数据异常");
@@ -75,7 +75,7 @@
     }
     var panzhi;
     function querenyuanmima() {
-        var zhi = 1;
+        var zhi = 20;//临时id
         $.ajax({
             url: "/Cheng/panduanyunamima/" + zhi,
             type: "post",

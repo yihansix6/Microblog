@@ -11,7 +11,10 @@ using System.Web.Mvc;
 using Microblog.Models;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
-
+using System.Web.Security;
+using System.Collections;
+using System.Data;
+using Microblog.umodel;
 namespace Microblog.Controllers
 {
 
@@ -33,8 +36,39 @@ namespace Microblog.Controllers
         {
             return View();
         }
+        //登录功能处理
+        [HttpPost]
+        public ActionResult weiboguangchang(string phone, string pass)
+        {
+            //var zhi = db.Users.Where(a => a.user_email == phone && a.user_password == pass).ToList();
+
+            if (phone != "" && pass != "" && piaoju(phone, pass))
+            {
+                return Content("<script>alert('登录成功');");
+            }
+            else
+            {
+                return Content("<script>alert('账户密码错误');window.location.href='/Cheng/weiboguangchang';</script>");
+            }
+
+        }
 
 
+        //创建身份票据
+        public bool piaoju(string phone, string pass)
+        {
+            Users zhi = db.Users.Where(a => a.user_email == phone && a.user_password == pass).FirstOrDefault();
+            if (zhi == null)
+            {
+                return false;
+            }
+            else
+            {
+                //创建身份票据
+                FormsAuthentication.SetAuthCookie(zhi.user_id.ToString(), false);
+                return true;
+            }
+        }
         /// <summary>
         /// 注册
         /// </summary>
@@ -131,7 +165,10 @@ namespace Microblog.Controllers
         /// 
         public ActionResult AccountSettings()
         {
-            return View();
+            var id = 20;//临时id
+            //初始化页面数据
+            var shuju = db.Userinfo.FirstOrDefault(a => a.user_id == id);
+            return View(shuju);
         }
         //省市级联
         public ActionResult GetProvice()
@@ -161,30 +198,98 @@ namespace Microblog.Controllers
         }
         //个人处理信息保存
         [HttpPost]
-        public ActionResult AccountSettings(Userinfo model, string sheng, string shi)
+        public ActionResult AccountSettings(Userinfo model, string sheng, string shi, string user_name, string userinfo_realname)
         {
-            //完成时要传id进来 未完成
-            model.user_id = 1;//零时id
+            model.user_id = 20;//临时id
 
-            if (sheng != null && shi != null)
+            //初始化页面数据
+            var shujuer = db.Userinfo.FirstOrDefault(a => a.user_id == model.user_id);
+            //初始化页面数据
+            var shuju = db.Userinfo.FirstOrDefault(a => a.user_id == model.user_id);
+
+            if (sheng != null || shi != null)
             {
                 var shengfen = db.province.Where(a => a.code == sheng).FirstOrDefault();
                 var shiming = db.city.Where(a => a.code == shi).FirstOrDefault();
                 model.userinfo_address = shengfen.name + shiming.name;
             }
 
+            //完成时要传id进来 未完成
+
+            //昵称不为空
+            if (user_name != "")
+            {
+                var zhi = db.Users.Find(model.user_id);
+                zhi.user_name = user_name;
+                db.Entry(zhi).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                //db.Configuration.ValidateOnSaveEnabled = true;
+                var xiugai = db.Userinfo.Where(a => a.user_id == model.user_id).ToList();
+                if (ModelState.IsValid)
+                {
+                    if (xiugai.Count > 0)
+                    {
+                        var canshu = db.Userinfo.Where(a => a.user_id == model.user_id).FirstOrDefault();
+
+                        canshu.userinfo_realname = model.userinfo_realname;
+                        canshu.userinfo_address = model.userinfo_address;
+                        canshu.userinfo_sex = model.userinfo_sex;
+                        canshu.userinfo_birthday = model.userinfo_birthday;
+                        canshu.userinfo_intro = model.userinfo_intro;
+                        canshu.userinfo_qqnumber = model.userinfo_qqnumber;
+
+
+                        //db.Set<实体模型>().AsNoTracking().FirstOrDefault(p => p.x == x)意思是找到这条数据，然后清除SaveChanges()缓存不会报错
+                        //db.Set<Userinfo>().AsNoTracking().FirstOrDefault(m => m.user_id == 1);
+
+                        // db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        return Content("<script>alert('保存成功');window.location.href='/Cheng/AccountSettings';</script>");
+                    }
+                    else
+                    {
+                        return Content("<script>alert('保存失败');window.location.href='/Cheng/AccountSettings';</script>");
+                    }
+                }
+                else
+                {
+
+                    return View(shujuer);
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                //db.Set<实体模型>().AsNoTracking().FirstOrDefault(p => p.x == x)意思是找到这条数据，然后清除SaveChanges()缓存不会报错
-                db.Set<Userinfo>().AsNoTracking().FirstOrDefault(m => m.user_id == 1);
+                var xiugai = db.Userinfo.Where(a => a.user_id == model.user_id).ToList();
 
-                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                if (xiugai.Count > 0)
+                {
+                    var canshu = db.Userinfo.Where(a => a.user_id == model.user_id).FirstOrDefault();
+
+                    canshu.userinfo_realname = model.userinfo_realname;
+                    canshu.userinfo_address = model.userinfo_address;
+                    canshu.userinfo_sex = model.userinfo_sex;
+                    canshu.userinfo_birthday = model.userinfo_birthday;
+                    canshu.userinfo_intro = model.userinfo_intro;
+                    canshu.userinfo_qqnumber = model.userinfo_qqnumber;
 
 
-                db.SaveChanges();
-                return Content("<script>alert('保存成功');window.location.href='/Cheng/AccountSettings';</script>");
+                    //db.Set<实体模型>().AsNoTracking().FirstOrDefault(p => p.x == x)意思是找到这条数据，然后清除SaveChanges()缓存不会报错
+                    db.Set<Userinfo>().AsNoTracking().FirstOrDefault(m => m.user_id == 1);
+
+                    //db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+
+                    db.SaveChanges();
+
+                    return Content("<script>alert('保存成功');window.location.href='/Cheng/AccountSettings';</script>");
+                }
+                else
+                {
+                    return Content("<script>alert('保存失败');window.location.href='/Cheng/AccountSettings';</script>");
+                }
             }
-            return View();
+
+            return View(shujuer);
         }
         //分布修改
         public ActionResult xiugai()
@@ -225,6 +330,110 @@ namespace Microblog.Controllers
                 return Content("1");
             }
 
+        }
+        //职业信息
+        public ActionResult zhiyexinxi()
+        {
+            return View();
+        }
+        //微博广场
+        public ActionResult weiboguangchang()
+        {
+            //加载使用微博的人
+            //Take()指定返回几条数据
+            List<Users> zhi = db.Users.Include("Userinfo").Take(9).ToList();
+            List<Users> zhier = db.Users.Include("Userinfo").OrderByDescending(a => a.user_id).Take(9).ToList();
+            ViewData["shiyongweiboderen"] = zhier;
+            //查找关注度
+            string sql = "select a.user_name,a.user_id,COUNT(b.user_byid) renshu from Users a,Relation b where a.user_id=b.user_id group by a.user_id,a.user_name order by COUNT(b.user_byid) desc";
+            //返回记录
+            var yuju = db.Database.SqlQuery<guanzhulei>(sql).Take(10).ToList();
+            //ArrayList shuzu = new ArrayList();
+
+
+
+            //foreach (var item in yuju)
+            //{
+            //    shuzu.Add(item.user_id);
+            //    shuzu.Add(item.user_name);
+            //    shuzu.Add(item.renshu);
+            //}
+            ViewData["guanzhushulian"] = yuju;
+
+            return View(zhi);
+        }
+
+        //修改微博邮箱
+        public ActionResult xiugaiyouxiang(int id)
+        {
+            var zhi = db.Users.FirstOrDefault(a => a.user_id == id);
+
+            return View(zhi);
+        }
+        //处理微博邮箱修改
+        [HttpPost]
+        public ActionResult xiugaiyouxiang(string user_email, string youxiang, int user_id)
+        {
+            if (ModelState.IsValid)
+            {
+
+
+                var shuju = db.Users.Where(a => a.user_email == youxiang).ToList();
+                if (shuju.Count == 0)
+                {
+                    //Users zhi = db.Users.FirstOrDefault(a => a.user_email == youxiang);
+                    //int id =(int)zhi.user_id;
+                    db.usp_xiugaier(youxiang, user_id);
+                    db.SaveChanges();
+                    return Content("<script>alert('修改成功');window.location.href='/Cheng/AccountSettings';</script>");
+                }
+                else
+                {
+                    return Content("<script>alert('该用户已存在');window.location.href='/Cheng/AccountSettings';</script>");
+                }
+
+            }
+
+
+            return View();
+        }
+        //修改头像
+        public ActionResult xiugaitouxiang()
+        {
+            //正式做的时候在这个地方获取身份票据取得id
+            return View();
+        }
+        [HttpPost]
+        //处理头像上传
+        public ActionResult tupianshanchuan(HttpPostedFileBase user_headphoto)
+        {
+            //正式做的时候在这个地方获取身份票据取得id
+
+            //设置保存路径
+            string lujing = "/resource/" + user_headphoto.FileName;
+            //把传过来的文件保存在自定义路径
+            user_headphoto.SaveAs(Server.MapPath(lujing));
+            return Content(lujing);
+
+        }
+        //处理修改头像
+        [HttpPost]
+        public ActionResult xiugaitouxiang(HttpPostedFileBase user_headphoto)
+        {
+            //设置保存路径
+            string lujing = "/resource/" + user_headphoto.FileName;
+            int id = 26;//临时变量 合并时获取身份票据做id 
+
+            var shuju = db.Userinfo.FirstOrDefault(a => a.user_id == id);
+            shuju.user_headphoto = lujing;
+            db.SaveChanges();
+
+            return Content("<script>alert('修改成功');window.location.href='/Cheng/xiugaitouxiang';</script>");
+        }
+        //实时更新局部信息
+        public ActionResult _zhengzaishuo()
+        {
+            return View();
         }
     }
 }
