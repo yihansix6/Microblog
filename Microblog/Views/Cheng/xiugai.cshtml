@@ -75,9 +75,9 @@
     }
     var panzhi;
     function querenyuanmima() {
-        var zhi = 20;//临时id
+        var zhi =$("#user_id").val();//临时id
         $.ajax({
-            url: "/Cheng/panduanyunamima/" + zhi,
+            url: "/Cheng/panduanyunamima",
             type: "post",
             data: { "dangqirenmima": $("#user_dangqirenmima").val() },/*传过去的变量名不能同控件名一样不然值为空*/
             success: function (tishi) {

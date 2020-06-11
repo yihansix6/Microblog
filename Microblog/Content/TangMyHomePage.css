@@ -7,6 +7,10 @@
     padding: 0px;
 }
 
+a {
+    text-decoration: none;
+}
+
 #toubu {
     width: 100%;
     height: 50px;
@@ -81,7 +85,7 @@
             }
 
 .sousuo {
-    width: 100px;
+    width: 150px;
     height: 25px;
     border: none;
 }
@@ -140,6 +144,7 @@
     width: 27%;
     height: 100%;
     background-color: lightblue;
+    
 }
 
 .headphoto {
@@ -305,7 +310,7 @@
             }
 
 .showWeibo {
-    border-bottom: dashed;
+    border-bottom: 1px solid #e6e6e6;
     margin-bottom: 8px;
 }
 
@@ -329,7 +334,7 @@
 }
 
     .showWeibobuttom span {
-        margin-right: 250px;
+        margin-right: 160px;
     }
 
     .showWeibobuttom a {
@@ -366,15 +371,16 @@
 
 .pinglun {
     width: 580px;
-    height: 200px;
-    border: 1px solid red;
+    /*    height: 200px;*/
+    background-color: #9e9e9ea6;
+    border-radius: 15px;
     float: right;
-    margin-right: 38px;
+    margin: 0 38px 20px 0;
 }
 
 .pinglun_top {
     height: 80px;
-    border-bottom: dashed;
+    border-bottom: 1px solid #e6e6e6;
 }
 
 .pinglunkuang {
@@ -396,9 +402,6 @@
         width: 50px;
         height: 50px;
     }
-
-
-
 
 
 
@@ -439,5 +442,22 @@
     top: 5px;
     text-align: center;
 }
-
 /*弹出框*/
+
+
+#weibuttom {
+    height: 90px;
+    width: 100%;
+    margin: 0 auto;
+    line-height: 60px;
+    background-color: lightcyan;
+    margin-bottom:30px;
+    border-bottom-left-radius:15px;
+    border-bottom-right-radius:15px;
+}
+.weibospan_yi{
+    float:left;
+}
+.weibospan_er {
+    float: right;
+}

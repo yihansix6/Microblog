@@ -589,6 +589,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pignose.tab.min.js" />
     <Content Include="Scripts\TangHomePage.js" />
+    <Content Include="Scripts\wangEditor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -617,6 +618,10 @@
     <Content Include="Views\Cheng\xiugaiyouxiang.cshtml" />
     <Content Include="Views\Cheng\zhiyexinxi.cshtml" />
     <Content Include="Views\Cheng\_zhengzaishuo.cshtml" />
+    <Content Include="Views\Tang\TaMicroblog.cshtml" />
+    <Content Include="Views\Tang\GuanzhuList.cshtml" />
+    <Content Include="Views\Tang\FansiList.cshtml" />
+    <Content Include="Views\Cheng\zhuti.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

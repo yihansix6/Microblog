@@ -7,9 +7,8 @@ namespace Microblog.umodel
 {
     public class guanzhulei
     {
-        public string user_name { get; set; }
-        public int user_id { get; set; }
-        public int renshu { get; set; }
+        public int user_guanzhu { get; set; }
+        public int fansicount { get; set; }
 
     }
 }

@@ -1,0 +1,97 @@
+﻿@using Microblog.Models
+@{
+    ViewBag.Title = "FansiList";
+    Layout = "~/Views/Shared/_Homepage.cshtml";
+}
+
+
+
+<div id="content">
+    <div id="left">
+        <h3 style="margin:30px 0 0 65px;">@ViewData["fansi"]人关注了 @ViewData["uname"]</h3>
+        @foreach (var item in Model as List<Users>)
+        {
+            <div class="gzList">
+                <img src="@item.Userinfo.user_headphoto" style="float:left;" class="headphoto" />
+                <div class="gzList_info">
+                    <p><a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a></p>
+                    <span>@item.Userinfo.userinfo_address</span>
+                    <span class="gzList_info_fensi">粉丝 @item.Relation.Count 人</span>
+                    @foreach (var fs in item.Relation)
+                    {
+                        bool isguanzhu = false;
+                        if (item.user_id == Convert.ToInt32(User.Identity.Name))
+                        {
+                            <input type="button" value="自己" class="yiguanzhu guanzhulist" />
+                            break;
+                        }
+                        foreach (var bzd in fs.Users.Relation)
+                        {
+                            if (bzd.user_id == Convert.ToInt32(User.Identity.Name))
+                            {
+                                <input type="button" value="已关注" class="yiguanzhu guanzhulist" onclick="DelGuanzhu(@item.user_id)" />
+                                isguanzhu = true;
+                                break;
+                            }
+                        }
+                        if (isguanzhu == false)
+                        {
+                            <input type="button" value="关注" class="guanzhubutton guanzhulist" onclick="AddGuanzhu(@item.user_id)" />
+                            break;
+                        }
+                        if (isguanzhu) { break; }
+                    }
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        }
+        <script>
+            function AddGuanzhu(key) {
+                window.location.href = "/Tang/AddFansiList/" + key;
+            }
+            function DelGuanzhu(key) {
+                window.location.href = "/Tang/DelFansiList/" + key;
+            }
+        </script>
+    </div>
+    <div id="right">
+        <div id="usermess">
+            @if (ViewData["uheadphoto"] == null)
+            {<img src="~/resource/moren.jpg" class="headphototwo" /> }
+            else
+            {<img src="@ViewData["uheadphoto"]" class="headphoto" />}
+            <p class="infodesc">
+                @ViewData["uname"]<br />
+                @ViewData["uaddress"]
+            </p>
+        </div>
+        <div id="guanzhu">
+            <ul id="yi">
+                <li><a href="/Tang/GuanzhuList/@ViewData["uId"]">@ViewData["guanzhu"]</a></li>
+                <li><a href="/Tang/FansiList/@ViewData["uId"]">@ViewData["fansi"]</a></li>
+                @if (Convert.ToInt32(ViewData["uId"]) == Convert.ToInt32(User.Identity.Name))
+                {
+                    <li><a href="/Tang/MyMicroblog">@ViewData["weibocount"]</a></li>
+                }
+                else
+                {
+                    <li><a href="/Tang/TaMicroblog/@ViewData["uId"]">@ViewData["weibocount"]</a></li>
+                }
+            </ul>
+            <div id="wuxu_er">
+                <ul id="er">
+                    <li><a href="/Tang/GuanzhuList/@ViewData["uId"]">关注</a></li>
+                    <li><a href="/Tang/FansiList/@ViewData["uId"]">粉丝</a></li>
+                    @if (Convert.ToInt32(ViewData["uId"]) == Convert.ToInt32(User.Identity.Name))
+                    {
+                        <li><a href="/Tang/MyMicroblog">微博</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Tang/TaMicroblog/@ViewData["uId"]">微博</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

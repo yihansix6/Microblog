@@ -9,10 +9,17 @@
     <script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 </head>
-<body>
+<body id="body">
     @Html.Partial("_HeaderNav")
     <div>
         @RenderBody()
     </div>
+    <script>
+        window.onload = function () {
+            var url = "@TempData["url"]";
+            var company = document.getElementById('body');
+            company.style.backgroundImage = "url('" + url + "')";
+        }
+    </script>
 </body>
 </html>

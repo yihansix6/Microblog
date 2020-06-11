@@ -1,46 +1,94 @@
-﻿<ul>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-</ul>
+﻿@using Microblog.Models
+<style type="text/css">
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .pinglun_zhengkuai {
+        width: 90%;
+        border-bottom: 1px dashed #e5e5e5;
+        height: auto;
+        overflow: hidden;
+        margin: 10px auto;
+    }
+
+    .pinglun_tupian {
+        width: 100%;
+        /*border: 1px solid red;*/
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+    }
+
+    .weibopinglun_mingcheng {
+        position: absolute;
+        left: 100px;
+        top: -5px;
+        height: 30px;
+        /*border: 1px solid red;*/
+    }
+
+    .pingluntouxiang {
+        float: left;
+    }
+
+    .shoushou {
+        margin-top: 10px;
+        display: block;
+        width: 300px;
+        margin-left:80px;
+        /*border: 1px solid red;*/
+    }
+
+    .pinglunziyang {
+        width: 60%;
+        word-wrap: break-word; /*自动换行*/
+        /*border: 1px solid red;*/
+        position: absolute;
+        top: 25px;
+        left: 100px;
+        height: auto;
+    }
+
+    .pinglunshijian {
+        height: 30px;
+        line-height: 30px;
+        /*border: 1px solid red;*/
+    }
+
+    .shoushou img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .pinglun_info {
+        width: 100%;
+        padding-left: 30px;
+        /*border:1px solid red;*/
+        word-wrap: break-word;
+    }
+</style>
+@foreach (var item in ViewData["shuju"] as List<Messages>)
+{
+    <div class="pinglun_zhengkuai">
+        <a href="/Tang/TaMicroblog/@item.user_id"><img style="width:80px;height:80px;" class="pingluntouxiang" src="@item.Users.Userinfo.user_headphoto" /></a>
+        <div class="pinglun_info">
+            <span style="color:#93c4df;padding-left:30px;"><a href="/Tang/TaMicroblog/@item.user_id">@item.Users.user_name</a>：</span>
+            <span class="shoushou">@Html.Raw(item.messages_info)</span>
+        </div>
+        <div class="pinglunshijian">
+            <span class="shijian" style="padding-left:30px;">@item.messages_time</span>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+

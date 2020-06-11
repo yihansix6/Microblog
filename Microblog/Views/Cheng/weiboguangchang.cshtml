@@ -13,64 +13,78 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <title>weiboguangchang</title>
     <script type="text/javascript">
-       
 
 
-    $(function () {
-    //登录功能
-    $("#weibo_dengluweiboanniu").click(function () {
-    //alert(1);
-    var zhiyi = $("#phone").val();
-    var zhier = $("#pass").val();
-    if (zhiyi != "") {
-    if (zhier != "") {
-    $("#biaodan").submit();
-    } else {
-    alert("请输入密码");
-    }
-    } else {
-    alert("请输入邮箱");
-    }
-    })
 
-    $(".urog-form-role").click(function (event) {
-    //得到点击事件的dom结构
-    var click_node = getEventTrigger(event);
-    //得到点击close图片的data-close
-    //data-close的值是input框的id
-    var clickName = click_node.getAttribute("data-close");
-    //得到点击事件的属性（INPUT）
-    var clickInput = click_node.nodeName;
-    //判断点击的是close图片，则清空相应id输入框的值，并隐藏该close图片
-    if (clickName == 'phone' || clickName == 'pass' || clickName == 'pass2') {
-    $("#" + clickName).val(null);
-    $("#" + clickName).next().css("display", "none");
-    }
-    //判断点击事件的元素是input框
-    if (clickInput == "INPUT") {
-    //获取INPUT的id
-    var next_closeId = click_node.id;
-    //绑定获取焦点和输入值-函数
-    $("#" + next_closeId).bind("focus keyup", function () {
-    //判断当前输入框的值不为空时
-    if ($("#" + next_closeId).val() != '') {
-    $(".urog-regclose").css("display", "none");
-    //当前输入框的下一个同袍节点样式显示
-    $("#" + next_closeId).next().css("display", "inline-block");
-    }
+        $(function () {
+            //邮箱验证
+            $("#phone").blur(function () {
+                //alert(1);
+                youxiangyanzheg();
+            })
+            //登录功能
+            $("#weibo_dengluweiboanniu").click(function () {
+                //alert(1);
+                var zhiyi = $("#phone").val();
+                var zhier = $("#pass").val();
+                if (zhiyi != "") {
+                    if (zhier != "") {
+                        $("#biaodan").submit();
+                    } else {
+                        alert("请输入密码");
+                    }
+                } else {
+                    alert("请输入邮箱");
+                }
+            })
 
-    })
-    }
-    })
-    //得到点击事件的dom结构
-    function getEventTrigger(event) {
-    //ie 火狐 event兼容
+            $(".urog-form-role").click(function (event) {
+                //得到点击事件的dom结构
+                var click_node = getEventTrigger(event);
+                //得到点击close图片的data-close
+                //data-close的值是input框的id
+                var clickName = click_node.getAttribute("data-close");
+                //得到点击事件的属性（INPUT）
+                var clickInput = click_node.nodeName;
+                //判断点击的是close图片，则清空相应id输入框的值，并隐藏该close图片
+                if (clickName == 'phone' || clickName == 'pass' || clickName == 'pass2') {
+                    $("#" + clickName).val(null);
+                    $("#" + clickName).next().css("display", "none");
+                }
+                //判断点击事件的元素是input框
+                if (clickInput == "INPUT") {
+                    //获取INPUT的id
+                    var next_closeId = click_node.id;
+                    //绑定获取焦点和输入值-函数
+                    $("#" + next_closeId).bind("focus keyup", function () {
+                        //判断当前输入框的值不为空时
+                        if ($("#" + next_closeId).val() != '') {
+                            $(".urog-regclose").css("display", "none");
+                            //当前输入框的下一个同袍节点样式显示
+                            $("#" + next_closeId).next().css("display", "inline-block");
+                        }
 
-    event = event ? event : window.event
-    var x = event.srcElement ? event.srcElement : event.target;
-    return x;
-    }
-    })
+                    })
+                }
+            })
+            //得到点击事件的dom结构
+            function getEventTrigger(event) {
+                //ie 火狐 event兼容
+
+                event = event ? event : window.event
+                var x = event.srcElement ? event.srcElement : event.target;
+                return x;
+            }
+        })
+        function youxiangyanzheg() {
+            var str = /\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+            var zhi = $("#phone").val()
+            if (!str.test(zhi)) {
+                $(".youxiangcuowuxinxi").css("visibility", "visible");/*显示*/
+            } else {
+                $(".youxiangcuowuxinxi").css("visibility", "hidden");/*隐藏*/
+            }
+        }
     </script>
 
 </head>
@@ -83,14 +97,16 @@
 
                 <p class="urog-form-role urog-phone">
 
-                    <input name="phone" id="phone" class="form-input" value="" type="text" placeholder="邮箱/例如:youxiang@xxxx.com" maxlength="16" />
+                    <input name="phone" id="phone" class="form-input" value="" type="text" placeholder="邮箱/例如:youxiang@xxxx.com" maxlength="30" />
                     <img src="~/resource/error.gif" class="urog-regclose" data-close="phone" />
                 </p>
+                <p class="youxiangcuowuxinxi" style="text-align:center;font-size:12px;color:#ff0000;visibility:hidden;">请输入正确邮箱格式</p>
                 <p class="urog-form-role">
 
-                    <input name="pass" value="" id="pass" type="password" placeholder="请输入密码" maxlength="11" class="form-input" />
+                    <input name="pass" value="" id="pass" type="password" placeholder="请输入密码" maxlength="30" class="form-input" />
                     <img src="~/resource/error.gif" class="urog-regclose" data-close="pass" />
                 </p>
+
                 <p class="weibo_wenzizidong"><input type="checkbox" class="xiacizidongdenglu" />下次自动登录 <a href="#" class="zhaohuimima">找回密码</a></p>
                 <p><input type="button" value="登录微博" id="weibo_dengluweiboanniu" /></p>
             }
@@ -110,7 +126,7 @@
                         @foreach (var item in Model as List<Microblog.Models.Users>)
                         {
                             <div class="touxiang">
-                                <a href="#" class="renxinxi">
+                                <a href="/Tang/TaMicroblog/@item.user_id" class="renxinxi">
                                     <dl>
                                         <dd>
                                             @if (item.Userinfo.user_headphoto == null)
@@ -132,7 +148,7 @@
                         @foreach (var item in ViewData["shiyongweiboderen"] as List<Users>)
                         {
                             <div class="touxiang">
-                                <a href="#" class="renxinxi">
+                                <a href="/Tang/TaMicroblog/@item.user_id" class="renxinxi">
                                     <dl>
                                         <dd>
                                             @if (item.Userinfo.user_headphoto == null)
@@ -162,9 +178,9 @@
                             <p>关注度TOP<span style="color:#ff0000;font-weight:bold;font-size:30px;">10</span></p>
                         </div>
                         <ul class="paxu">
-                            @foreach (var item in ViewData["guanzhushulian"] as List<Microblog.umodel.guanzhulei>)
+                            @foreach (var item in ViewData["guanzhushulian"] as Dictionary<Users,int>)
                             {
-                                <li class="guanzhupaixu"><span class="mingzi">@item.user_name</span><span class="fensishu">@item.renshu</span> </li>
+                                <li class="guanzhupaixu"><span class="mingzi"><a href="/Tang/TaMicroblog/@item.Key.user_id">@item.Key.user_name</a></span><span class="fensishu">@item.Value</span> </li>
                             }
                         </ul>
                         <div class="tupianpaihang"></div>

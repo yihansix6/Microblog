@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "zhuti";
+    Layout = "~/Views/Shared/_Account Settings.cshtml";
+}
+
+<style type="text/css">
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #zhutikuang {
+        width: 70%;
+        height: 300px;
+        margin: 0px auto;
+        background-color: #ffffff;
+        /*border: 1px solid red;*/
+    }
+
+    #shangchuan {
+        width: 200px;
+        height: 20px;
+    }
+
+    #xiugaitouxiang_touxiang {
+        padding-left: 300px;
+    }
+
+    #shangchuaner {
+        text-decoration: none;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid #8bbe39;
+        background: linear-gradient(#94d825,#5d9f05);
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    #baocunanniu {
+        text-decoration: none;
+        width: 300px;
+        height: 30px;
+        line-height: 30px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid #8bbe39;
+        background: linear-gradient(#94d825,#5d9f05);
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    #xiugaitouxiang_touxiang tr td {
+        line-height: 50px;
+    }
+</style>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //预览图片
+        $("#shangchuaner").click(function () {
+            var zhi = $("#shangchuan").val();
+
+            if (zhi != "") {
+
+
+                var shuju = document.getElementById("biaodan");
+                var shujuzhi = new FormData(shuju);
+                $.ajax({
+                    url: "/Cheng/bejingshangchuan",
+                    type: "post",
+                    data: shujuzhi,
+                    contentType: false,
+                    processData: false,
+                    success: function (zhi) {
+                        $("#tupian").attr("src", zhi)
+                    }
+
+                })
+            } else {
+                alert("未选择任何文件");
+            }
+        })
+        //上传头像
+        $("#baocunanniu").click(function () {
+
+            var neiro = $("#shangchuan").val();
+            if (neiro != "") {
+                var shuju = document.getElementById("biaodan");
+                var shujuzhi = new FormData(shuju);
+                $.ajax({
+                    url: "/Cheng/zhuti",
+                    type: "post",
+                    data: shujuzhi,
+                    contentType: false,
+                    processData: false,
+                    success: function (zhilujing) {
+                        alert("保存成功");
+                    }
+                })
+            } else {
+                alert("请选择背景图片");
+            }
+
+        })
+
+    })
+</script>
+<div id="zhutikuang">
+    <form action="/Cheng/zhuti" method="post" enctype="multipart/form-data" id="biaodan">
+        <table id="xiugaitouxiang_touxiang">
+            <tr>
+                <td>
+                    <img id="tupian" style="width: 100px;height: 100px;" />
+                </td>
+                <td><input type="file" name="user_headphoto" id="shangchuan" /><input type="button" value="预览主题" id="shangchuaner" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" value="保存" id="baocunanniu" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+

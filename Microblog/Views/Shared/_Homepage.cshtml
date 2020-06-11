@@ -8,10 +8,17 @@
     <script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
     <link href="~/Content/TangMyMicroblog.css" rel="stylesheet" />
 </head>
-<body>
+<body id="body">
     <div>@Html.Partial("_HeaderNav")</div>
     <div>
         @RenderBody()
     </div>
+    <script>
+        window.onload = function () {
+            var url = "@TempData["url"]";
+            var company = document.getElementById('body');
+            company.style.backgroundImage = "url('" + url + "')";
+        }
+    </script>
 </body>
 </html>

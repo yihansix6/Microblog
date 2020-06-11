@@ -1,0 +1,206 @@
+﻿@using Microblog.Models
+@{
+    ViewBag.Title = "TaMicroblog";
+    Layout = "~/Views/Shared/_Homepage.cshtml";
+}
+
+    <div id="content">
+        <div id="left">
+            <div id="left-top">
+                <div id="headphoto">
+                    <img src="@ViewData["mHeadphoto"]" />
+                </div>
+                <div id="messagesinfo">
+                    <h3>@ViewData["mname"]</h3>
+                    <p>@ViewData["maddress"]</p>
+                    @if (Convert.ToBoolean(ViewData["isGuanzhu"]))
+                    {
+                        <input type="button" value="已关注" class="yiguanzhu" onclick="DelGuanzhu(@ViewData["Tid"])" />
+                    }
+                    else
+                    {
+                        <input type="button" value="关注" class="guanzhubutton" onclick="AddGuanzhu(@ViewData["Tid"])" />
+                    }
+
+                    <script>
+                        function AddGuanzhu(key) {
+                            window.location.href = "/Tang/AddGuanzhu/" + key;
+                        }
+                        function DelGuanzhu(key) {
+                            window.location.href = "/Tang/DelGuanzhu/" + key;
+                        }
+                    </script>
+                </div>
+            </div>
+            <div id="left-buttom">
+                <div style="height:1000px;overflow-y:scroll;">
+                    @foreach (var item in Model as List<Microblog.Models.Messages>)
+                    {
+                        <div class="showWeibo">
+
+                            <div class="showWeibotop">
+                                <span>@item.Users.user_name：</span>
+                                <span>@Html.Raw(item.messages_info)</span>
+                            </div>
+                            <div class="showWeibobuttom">
+                                <p>
+                                    <span>@item.messages_time</span>
+                                    <a onclick="zhuanfa('@item.messages_key')">转发(@item.messages_transpondnum)</a>|
+                                    <a href="/Tang/TaShouCang/@item.messages_id">收藏(@item.messages_collectnum)</a>|
+                                    <a onclick="pinglun('@item.messages_id');">评论(@item.messages_commentnum)</a>
+                                </p>
+                            </div>
+
+
+                            @*转发框*@
+                            @using (Html.BeginForm("AddZhuanfa", "Tang", "post"))
+                            {
+                                <div class="zhezhao" id='@item.messages_key'>
+                                    <div class="tankuang">
+                                        <div id="header">
+                                            <div class="zhuanfa-top">
+                                                <span>@item.Users.user_name：</span>
+                                                <span>@Html.Raw(item.messages_info)</span>
+                                            </div>
+                                            <div class="zhuanfa-buttom">
+                                                <input type="text" name="zhuanfawenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
+                                            </div>
+                                            <div id="header-right" onclick="zhuanfa('@item.messages_key')">x</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <script>
+                        $(function () {
+                            $("#@item.messages_id").addClass("isHide");
+                            $("#@item.messages_key").addClass("isHide");
+                            sessionStorage.setItem("plkey", "true");
+                            sessionStorage.setItem("zfkey", "true");
+                        });
+                            </script>
+
+                            @*评论框*@
+                            @using (Html.BeginForm("TaAddPinglun", "Tang", "post"))
+                            {
+                                <div class="pinglun" id="@item.messages_id">
+                                    <div class="pinglun_top">
+                                        <input type="text" style="display:none;" name="messagesid" value="@item.messages_id" />
+                                        <input type="text" name="pinglunwenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
+                                    </div>
+                                    @foreach (var lie in item.Comments)
+                                    {
+                                        <div class="pinglun_buttom">
+                                            <img src="@lie.Users.Userinfo.user_headphoto" />
+                                            <span>@lie.Users.user_name</span>
+                                            <span>@lie.comments_info</span>
+                                            <span>@lie.comments_time</span>
+                                        </div>
+                                    }
+                                </div>
+                                <div style="clear:both;"></div>
+                            }
+                        </div>
+                    }
+                    </div>
+                    <script>
+                        function pinglun(id) {
+                            var plkey = sessionStorage.getItem("plkey");
+                            if (plkey == "true") {
+                                $("#" + id).removeClass("isHide");
+                                sessionStorage.setItem("plkey", "false");
+                            } else {
+                                $("#" + id).addClass("isHide");
+                                sessionStorage.setItem("plkey", "true");
+                            }
+                        }
+
+                        function zhuanfa(id) {
+                            var zfkey = sessionStorage.getItem("zfkey");
+                            if (zfkey == "true") {
+                                $("#" + id).removeClass("isHide");
+                                sessionStorage.setItem("zfkey", "false");
+                            } else {
+                                $("#" + id).addClass("isHide");
+                                sessionStorage.setItem("zfkey", "true");
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        <div id="right">
+            <div id="guanzhu">
+                <ul id="yi">
+                    <li><a href="/Tang/GuanzhuList/@ViewData["Tid"]">@ViewData["guanzhu"]</a></li>
+                    <li><a href="/Tang/FansiList/@ViewData["Tid"]">@ViewData["fansi"]</a></li>
+                    <li><a href="/Tang/TaMicroblog/@ViewData["Tid"]">@ViewData["weibocount"]</a></li>
+                </ul>
+                <div id="wuxu_er">
+                    <ul id="er">
+                        <li><a href="/Tang/GuanzhuList/@ViewData["Tid"]">关注</a></li>
+                        <li><a href="/Tang/FansiList/@ViewData["Tid"]">粉丝</a></li>
+                        <li><a href="/Tang/TaMicroblog/@ViewData["Tid"]">微博</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="myfan">
+                <p><a>Ta的粉丝(@ViewData["fansi"])</a></p>
+                <div class="shiyongweiboderen">
+                    @foreach (var item in ViewData["fansiHeadphoto"] as List<Users>)
+                    {
+                        <div class="touxiang">
+                            <dl>
+                                <dd>
+                                    @if (item.Userinfo.user_headphoto == null)
+                                    {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
+                                    else
+                                    {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
+                                </dd>
+                                <dt style="font-size:16px;">
+                                    @if (User.Identity.Name == null || User.Identity.Name == "") { }
+                                    else
+                                    {
+                                        if (item.user_id == Convert.ToInt32(User.Identity.Name))
+                                        {<a href="/Tang/MyMicroblog">@item.user_name</a>}
+                                    else
+                                    {<a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a>}
+                            }
+                                </dt>
+                            </dl>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div id="myguanzhu">
+                <p><a>Ta关注的(@ViewData["guanzhu"])</a></p>
+                @foreach (var item in ViewData["guanzhuHedaphoto"] as List<Users>)
+                {
+                    <div class="touxiang">
+                        <dl>
+                            <dd>
+                                @if (item.Userinfo.user_headphoto == null)
+                                {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
+                                else
+                                {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
+                            </dd>
+                            <dt style="font-size:16px;">
+                                @if (User.Identity.Name == null || User.Identity.Name == "") { }
+                                else
+                                {
+                                    if (item.user_id == Convert.ToInt32(User.Identity.Name))
+                                    {<a href="/Tang/MyMicroblog">@item.user_name</a>}
+                                else
+                                {<a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a>}
+                        }
+                            </dt>
+                        </dl>
+                    </div>
+                }
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div id="weibuttom">
+            <span class="weibospan_yi">AAAAAAAAA</span>
+            <span class="weibospan_er">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
+        </div>
+    </div>
+

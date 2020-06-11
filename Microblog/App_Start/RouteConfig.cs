@@ -16,7 +16,7 @@ namespace Microblog
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "TangController", action = "MyHomePage", id = UrlParameter.Optional }
+                defaults: new { controller = "Cheng", action = "weiboguangchang", id = UrlParameter.Optional }
             );
         }
     }

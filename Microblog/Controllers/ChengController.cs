@@ -44,7 +44,7 @@ namespace Microblog.Controllers
 
             if (phone != "" && pass != "" && piaoju(phone, pass))
             {
-                return Content("<script>alert('登录成功');");
+                return Content("<script>alert('登录成功');window.location.href='/Tang/MyHomePage';</script>");
             }
             else
             {
@@ -128,7 +128,7 @@ namespace Microblog.Controllers
                     //db.Users.Add(model);
                     db.SaveChanges();
 
-                    return Content("<script>alert('注册成功');window.location.href='/Cheng/Register';</script>");
+                    return Content("<script>alert('注册成功');window.location.href='/Cheng/weiboguangchang';</script>");
 
                 }
                 else
@@ -163,9 +163,10 @@ namespace Microblog.Controllers
         /// </summary>
         /// <returns>视图</returns>
         /// 
+        [Authorize]
         public ActionResult AccountSettings()
         {
-            var id = 20;//临时id
+            int id = Convert.ToInt32(User.Identity.Name);
             //初始化页面数据
             var shuju = db.Userinfo.FirstOrDefault(a => a.user_id == id);
             return View(shuju);
@@ -197,10 +198,11 @@ namespace Microblog.Controllers
             return Content(jsonStr);
         }
         //个人处理信息保存
+        [Authorize]
         [HttpPost]
         public ActionResult AccountSettings(Userinfo model, string sheng, string shi, string user_name, string userinfo_realname)
         {
-            model.user_id = 20;//临时id
+            model.user_id = Convert.ToInt32(User.Identity.Name);
 
             //初始化页面数据
             var shujuer = db.Userinfo.FirstOrDefault(a => a.user_id == model.user_id);
@@ -214,7 +216,7 @@ namespace Microblog.Controllers
                 model.userinfo_address = shengfen.name + shiming.name;
             }
 
-            //完成时要传id进来 未完成
+
 
             //昵称不为空
             if (user_name != "")
@@ -292,16 +294,18 @@ namespace Microblog.Controllers
             return View(shujuer);
         }
         //分布修改
+        [Authorize]
         public ActionResult xiugai()
         {
 
             return View();
         }
         [HttpPost]
+        [Authorize]
         //处理修改密码
         public ActionResult xiugai(Users model)
         {
-            model.user_id = 1;//项目完成时要传id过来 未完成
+            model.user_id = Convert.ToInt32(User.Identity.Name);
 
 
             if (model.user_password.Length >= 6)
@@ -317,8 +321,9 @@ namespace Microblog.Controllers
 
         }
         //判断原密码是否正确
-        public ActionResult panduanyunamima(string dangqirenmima, int id)
+        public ActionResult panduanyunamima(string dangqirenmima)
         {
+            int id = Convert.ToInt32(User.Identity.Name);
             Users zhi = db.Users.Where(a => a.user_id == id).FirstOrDefault();
 
             if (zhi.user_password == dangqirenmima)
@@ -345,24 +350,38 @@ namespace Microblog.Controllers
             List<Users> zhier = db.Users.Include("Userinfo").OrderByDescending(a => a.user_id).Take(9).ToList();
             ViewData["shiyongweiboderen"] = zhier;
             //查找关注度
-            string sql = "select a.user_name,a.user_id,COUNT(b.user_byid) renshu from Users a,Relation b where a.user_id=b.user_id group by a.user_id,a.user_name order by COUNT(b.user_byid) desc";
+            //string sql = "select a.user_name,a.user_id,COUNT(b.user_guanzhu) renshu from Users a,Relation b where a.user_id=b.user_id group by a.user_id,a.user_name order by COUNT(b.user_byid) desc";
+            string sql = "select b.user_guanzhu,count(a.user_id) fansicount from Users a,Relation b where a.user_id=b.user_id group by b.user_guanzhu order by fansicount desc";
             //返回记录
             var yuju = db.Database.SqlQuery<guanzhulei>(sql).Take(10).ToList();
             //ArrayList shuzu = new ArrayList();
-
-
-
+            Dictionary<Users, int> fansiD = new Dictionary<Users, int>();
+            foreach (var item in yuju)
+            {
+                var fansi = db.Users.Where(u => u.user_id == item.user_guanzhu).FirstOrDefault();
+                fansiD.Add(fansi, item.fansicount);
+            }
+            //List<Users> zong = new List<Users>();
+            //foreach (var item in fansiD)
+            //{
+            //    zong.Add(item.Key);
+            //}
+            
             //foreach (var item in yuju)
             //{
             //    shuzu.Add(item.user_id);
             //    shuzu.Add(item.user_name);
             //    shuzu.Add(item.renshu);
             //}
-            ViewData["guanzhushulian"] = yuju;
+            ViewData["guanzhushulian"] = fansiD;
+
+            //微博信息
+            var shuju = db.Messages.OrderByDescending(m => m.messages_time).ToList();
+            ViewData["shuju"] = shuju;
 
             return View(zhi);
         }
-
+        [Authorize]
         //修改微博邮箱
         public ActionResult xiugaiyouxiang(int id)
         {
@@ -398,6 +417,7 @@ namespace Microblog.Controllers
             return View();
         }
         //修改头像
+        [Authorize]
         public ActionResult xiugaitouxiang()
         {
             //正式做的时候在这个地方获取身份票据取得id
@@ -407,7 +427,7 @@ namespace Microblog.Controllers
         //处理头像上传
         public ActionResult tupianshanchuan(HttpPostedFileBase user_headphoto)
         {
-            //正式做的时候在这个地方获取身份票据取得id
+
 
             //设置保存路径
             string lujing = "/resource/" + user_headphoto.FileName;
@@ -422,7 +442,7 @@ namespace Microblog.Controllers
         {
             //设置保存路径
             string lujing = "/resource/" + user_headphoto.FileName;
-            int id = 26;//临时变量 合并时获取身份票据做id 
+            int id = Convert.ToInt32(User.Identity.Name); ;
 
             var shuju = db.Userinfo.FirstOrDefault(a => a.user_id == id);
             shuju.user_headphoto = lujing;
@@ -434,6 +454,51 @@ namespace Microblog.Controllers
         public ActionResult _zhengzaishuo()
         {
             return View();
+        }
+        //退出方法
+        public ActionResult tuichu()
+        {
+            FormsAuthentication.SignOut();//注销
+            return Content("<script>alert('退出成功');window.location.href='/Cheng/weiboguangchang';</script>");
+        }
+        //背景主题上传
+        [Authorize]
+        public ActionResult zhuti()
+        {
+            return View();
+        }
+        //处理背景预览
+        [HttpPost]
+        public ActionResult bejingshangchuan(HttpPostedFileBase user_headphoto)
+        {
+
+            //设置保存路径
+            string lujing = "/resource/" + user_headphoto.FileName;
+            //把传过来的文件保存在自定义路径
+            user_headphoto.SaveAs(Server.MapPath(lujing));
+            return Content(lujing);
+
+        }
+        //处理背景上传
+        
+        [HttpPost]
+        public ActionResult zhuti(HttpPostedFileBase user_headphoto)
+        {
+            //设置保存路径
+            string lujing = "/resource/" + user_headphoto.FileName;
+            int id = Convert.ToInt32(User.Identity.Name);
+
+            var shuju = db.Userinfo.FirstOrDefault(a => a.user_id == id);
+            shuju.resources_themeurl = lujing;
+            db.SaveChanges();
+
+            //使用cookie
+            HttpCookie cookie = new HttpCookie("Backgroundimg"+ User.Identity.Name);
+            cookie.Expires = DateTime.MaxValue;
+            cookie.Values.Add(User.Identity.Name,lujing);
+ 
+             Response.AppendCookie(cookie);
+            return Content("lujing");
         }
     }
 }

@@ -3,7 +3,7 @@
     ViewBag.Title = "MyHomePage";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+    
 
 
 <div id="content">
@@ -59,7 +59,7 @@
         </script>
 
         @Html.Partial("_ShowWeiboNav")
-
+        <div style="height:1000px;overflow-y:scroll;">
         @foreach (var item in Model as List<Microblog.Models.Messages>)
         {
             if (item == null)
@@ -67,13 +67,32 @@
                 continue;
             }
             <div class="showWeibo">
-                <img src="@item.Users.Userinfo.user_headphoto" class="headphototwo" />
+                @if (@item.Users.Userinfo.user_headphoto == null)
+                {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
+                else
+                {<img src="@item.Users.Userinfo.user_headphoto" class="headphototwo" />}
                 <div class="showWeiborigth">
-                    <span>@item.Users.user_name：</span>
+                    @if (item.user_id == Convert.ToInt32(ViewData["uId"]))
+                    {
+                        <span><a href="/Tang/MyMicroblog">@item.Users.user_name</a>：</span>
+                    }
+                    else
+                    {
+                        <span><a href="/Tang/TaMicroblog/@item.user_id">@item.Users.user_name</a>：</span>
+                    }
                     <span>@Html.Raw(item.messages_info)</span>
                 </div>
                 <div class="showWeibobuttom">
-                    <p><span>@item.messages_time</span><a onclick="DelWeibo(@item.messages_id)">删除</a>|<a onclick="zhuanfa('@item.messages_key')">转发</a>|<a href="/Tang/ShouCang/@item.messages_id">收藏</a>|<a onclick="pinglun('@item.messages_id');">评论</a></p>
+                    <p>
+                        <span>@item.messages_time</span>
+                        @if (item.user_id == Convert.ToInt32(User.Identity.Name))
+                        {
+                            <a onclick="DelWeibo(@item.messages_id)">删除</a><a>|</a>
+                        }
+                        <a onclick="zhuanfa('@item.messages_key')">转发(@item.messages_transpondnum)</a>|
+                        <a href="/Tang/ShouCang/@item.messages_id">收藏(@item.messages_collectnum)</a>|
+                        <a onclick="pinglun('@item.messages_id');">评论(@item.messages_commentnum)</a>
+                    </p>
                 </div>
                 @using (Html.BeginForm("AddZhuanfa", "Tang", "post"))
                 {
@@ -152,7 +171,7 @@
                 }
             </script>
         }
-
+    </div>
     </div>
     <div id="right">
         <div id="usermess">
@@ -164,23 +183,21 @@
         <div id="guanzhu">
             <div id="wuxu_yi">
                 <ul id="yi">
-                    <li><a>@ViewData["guanzhu"]</a></li>
-                    <li><a>@ViewData["fansi"]</a></li>
+                    <li><a href="/Tang/GuanzhuList/@ViewData["uId"]">@ViewData["guanzhu"]</a></li>
+                    <li><a href="/Tang/FansiList/@ViewData["uId"]">@ViewData["fansi"]</a></li>
                     <li><a href="/Tang/MyMicroblog">@ViewData["weibocount"]</a></li>
                 </ul>
             </div>
             <div id="wuxu_er">
                 <ul id="er">
-                    <li><a>关注</a></li>
-                    <li><a>粉丝</a></li>
+                    <li><a href="/Tang/GuanzhuList/@ViewData["uId"]">关注</a></li>
+                    <li><a href="/Tang/FansiList/@ViewData["uId"]">粉丝</a></li>
                     <li><a href="/Tang/MyMicroblog">微博</a></li>
                 </ul>
             </div>
         </div>
         <div id="textlable">
             <p><a href="/Tang/MyMicroblog">我的首页</a></p>
-            <p><a>@@提到我的</a></p>
-            <p><a>我的评论</a></p>
             <p><a>我的收藏</a></p>
         </div>
         <div id="myfan">
@@ -192,11 +209,11 @@
                         <dl>
                             <dd>
                                 @if (item.Userinfo.user_headphoto == null)
-                                {<img src="~/resource/arrowall.gif" style="width:55px;height:55px;" /> }
+                                {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
                                 else
                                 {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
                             </dd>
-                            <dt style="font-size:16px;">@item.user_name</dt>
+                            <dt style="font-size:16px;"><a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a></dt>
                         </dl>
                     </div>
                 }
@@ -210,15 +227,20 @@
                     <dl>
                         <dd>
                             @if (item.Userinfo.user_headphoto == null)
-                            {<img src="~/resource/arrowall.gif" style="width:55px;height:55px;" /> }
+                            {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
                             else
                             {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
                         </dd>
-                        <dt style="font-size:16px;">@item.user_name</dt>
+                        <dt style="font-size:16px;"><a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a></dt>
 
                     </dl>
                 </div>
             }
         </div>
+    </div>
+    <div style="clear:both;"></div>
+    <div id="weibuttom">
+        <span class="weibospan_yi">AAAAAAAAA</span>
+        <span class="weibospan_er">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
     </div>
 </div>

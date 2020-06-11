@@ -6,6 +6,9 @@
     margin: 0px;
     padding: 0px;
 }
+a {
+    text-decoration: none;
+}
 
 #toubu {
     width: 100%;
@@ -80,7 +83,7 @@
             }
 
 .sousuo {
-    width: 100px;
+    width: 150px;
     height: 25px;
     border: none;
 }
@@ -100,7 +103,7 @@
 
 #content {
     width: 70%;
-    height: 2500px;
+    height: 1500px;
     background-color: white;
     margin: 0 auto;
 }
@@ -129,10 +132,36 @@
     #messagesinfo h3{
         margin:36px 0 0 20px;
     }
+.guanzhubutton {
+    width: 110px;
+    height: 34px;
+    border-radius: 5px;
+    border: none;
+    background: linear-gradient(#9adf28, #589a02);
+    color: #ffffff;
+    margin: 20px 0 0 20px;
+}
+.yiguanzhu {
+    width: 110px;
+    height: 34px;
+    border-radius: 5px;
+    border: none;
+    color:black;
+    margin: 20px 0 0 20px;
+}
 
 #faweibo {
     float: right;
     margin:36px 20px 0 0;
+    display:block;
+    width:120px;
+    height:45px;
+    border-radius:10px;
+    background-color: coral;
+    text-align:center;
+    line-height:45px;
+    font-size:18px;
+    color: white;
 }
 .fabu {
     width: 120px;
@@ -155,9 +184,8 @@
 
 
 .showWeibo {
-    border-bottom: dashed;
+    border-bottom: 1px solid #e6e6e6;
     margin-bottom: 8px;
-    background-color:darkgray;
 }
 
 .showWeibotop {
@@ -176,7 +204,7 @@
 }
 
     .showWeibobuttom span {
-        margin-right: 250px;
+        margin-right: 160px;
     }
 
     .showWeibobuttom a {
@@ -213,15 +241,16 @@
 
 .pinglun {
     width: 580px;
-    height: 200px;
-    border: 1px solid red;
+    /*    height: 200px;*/
+    background-color: #9e9e9ea6;
+    border-radius: 15px;
     float: right;
-    margin-right: 38px;
+    margin: 0 38px 20px 0;
 }
 
 .pinglun_top {
     height: 80px;
-    border-bottom: dashed;
+    border-bottom: 1px dotted #e6e6e6;
 }
 
 .pinglunkuang {
@@ -304,6 +333,17 @@
     height: 100%;
     background-color: lightblue;
 }
+.headphoto {
+    width: 70px;
+    height: 70px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.infodesc {
+    float: right;
+    margin-right: 50px;
+    margin-top: 30px;
+}
 
 #guanzhu {
     margin-top: 50px;
@@ -378,3 +418,44 @@
         .touxiang dl dd {
             line-height: 20px;
         }
+
+
+/*粉丝视图样式*/
+
+.gzList {
+    margin: 25px 0 0 20px;
+    border-bottom: dotted;
+}
+.gzList_info {
+    float: left;
+    margin: 25px 0 0 20px;
+}
+.gzList_info_fensi{
+    margin-left:25px;
+    font-size:12px;
+}
+
+.guanzhulist{
+    float:right;
+    margin:0 0 20px 300px;
+}
+
+
+#weibuttom {
+    height: 90px;
+    width: 100%;
+    margin: 0 auto;
+    line-height: 60px;
+    background-color: lightcyan;
+    margin-bottom: 30px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.weibospan_yi {
+    float: left;
+}
+
+.weibospan_er {
+    float: right;
+}

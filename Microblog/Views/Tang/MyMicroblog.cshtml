@@ -80,69 +80,91 @@
             </div>
             <div id="left-mid"></div>
             <div id="left-buttom">
-                @foreach (var item in Model as List<Microblog.Models.Messages>)
+                @*@foreach (var zfwb in item.Users.Transpond)
                 {
-                    <div class="showWeibo">
-                        @foreach (var zfwb in item.Transpond)
-                        {
-                            if (zfwb.transpond_users_id == item.user_id)
-                            {
-                                
-                            }
-                        }
+                    if (zfwb.transpond_users_id == item.user_id)
+                    {
                         <div class="showWeibotop">
-                            <span>@item.Users.user_name：</span>
-                            <span>@Html.Raw(item.messages_info)</span>
-                        </div>
-                        <div class="showWeibobuttom">
+                            <div class="zhuanfainfo_top">
+                                <span>@item.Users.user_name</span>
+                                <span>@zfwb.transpond_info</span>
+                            </div>
+                            <div class="zhuanfainfo_top">
+                                <div class="showWeibotop">
+                                    <span>@zfwb.Users.user_name：</span>
+                                    <span>@Html.Raw(zfwb.Messages.messages_info)</span>
+                                </div>
+                                <div class="showWeibobuttom">
                             <p><span>@item.messages_time</span><a onclick="DelWeibo(@item.messages_id)">删除</a>|<a onclick="zhuanfa('@item.messages_key')">转发</a>|<a href="/Tang/MyShouCang/@item.messages_id">收藏</a>|<a onclick="pinglun('@item.messages_id');">评论</a></p>
                         </div>
+                            </div>
+                        </div>
+                    }
+                }*@
+                <div style="height:1000px;overflow-y:scroll;">
+                    @foreach (var item in Model as List<Microblog.Models.Messages>)
+                    {
+                        <div class="showWeibo">
+
+                            <div class="showWeibotop">
+                                <span>@item.Users.user_name：</span>
+                                <span>@Html.Raw(item.messages_info)</span>
+                            </div>
+                            <div class="showWeibobuttom">
+                                <p>
+                                    <span>@item.messages_time</span>
+                                    <a onclick="DelWeibo(@item.messages_id)">删除</a>|
+                                    <a onclick="zhuanfa('@item.messages_key')">转发(@item.messages_transpondnum)</a>|
+                                    <a href="/Tang/MyShouCang/@item.messages_id">收藏(@item.messages_collectnum)</a>|
+                                    <a onclick="pinglun('@item.messages_id');">评论(@item.messages_commentnum)</a>
+                                </p>
+                            </div>
 
 
-                        @*转发框*@
-                        @using (Html.BeginForm("AddZhuanfa", "Tang", "post"))
-                        {
-                            <div class="zhezhao" id='@item.messages_key'>
-                                <div class="tankuang">
-                                    <div id="header">
-                                        <div class="zhuanfa-top">
-                                            <span>@item.Users.user_name：</span>
-                                            <span>@Html.Raw(item.messages_info)</span>
+                            @*转发框*@
+                            @using (Html.BeginForm("AddZhuanfa", "Tang", "post"))
+                            {
+                                <div class="zhezhao" id='@item.messages_key'>
+                                    <div class="tankuang">
+                                        <div id="header">
+                                            <div class="zhuanfa-top">
+                                                <span>@item.Users.user_name：</span>
+                                                <span>@Html.Raw(item.messages_info)</span>
+                                            </div>
+                                            <div class="zhuanfa-buttom">
+                                                <input type="text" name="zhuanfawenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
+                                            </div>
+                                            <div id="header-right" onclick="zhuanfa('@item.messages_key')">x</div>
                                         </div>
-                                        <div class="zhuanfa-buttom">
-                                            <input type="text" name="zhuanfawenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
-                                        </div>
-                                        <div id="header-right" onclick="zhuanfa('@item.messages_key')">x</div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
 
 
-                        @*评论框*@
-                        @using (Html.BeginForm("AddPinglun", "Tang", "post"))
-                        {
-                            <div class="pinglun" id="@item.messages_id">
-                                <div class="pinglun_top">
-                                    <input type="text" style="display:none;" name="messagesid" value="@item.messages_id" />
-                                    <input type="text" name="pinglunwenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
-                                </div>
-                                @foreach (var lie in item.Comments)
-                                {
-                                    <div class="pinglun_buttom">
-                                        <img src="@lie.Users.Userinfo.user_headphoto" />
-                                        <span>@lie.Users.user_name</span>
-                                        <span>@lie.comments_info</span>
-                                        <span>@lie.comments_time</span>
+                            @*评论框*@
+                            @using (Html.BeginForm("MyAddPinglun", "Tang", "post"))
+                            {
+                                <div class="pinglun" id="@item.messages_id">
+                                    <div class="pinglun_top">
+                                        <input type="text" style="display:none;" name="messagesid" value="@item.messages_id" />
+                                        <input type="text" name="pinglunwenben" class="pinglunkuang" /><input type="submit" class="pinglunanniu" value="发表" />
                                     </div>
-                                }
+                                    @foreach (var lie in item.Comments)
+                                    {
+                                        <div class="pinglun_buttom">
+                                            <img src="@lie.Users.Userinfo.user_headphoto" />
+                                            <span>@lie.Users.user_name</span>
+                                            <span>@lie.comments_info</span>
+                                            <span>@lie.comments_time</span>
+                                        </div>
+                                    }
 
 
-                            </div>
-                            <div style="clear:both;"></div>
-                        }
-                    </div>
-                    <script>
+                                </div>
+                                <div style="clear:both;"></div>
+                            }
+                        </div>
+                        <script>
                         function DelWeibo(id) {
                             if (confirm("确定删除吗？")) {
                                 window.location.href = "/Tang/MyDelweibo/" + id;
@@ -175,65 +197,71 @@
                                 sessionStorage.setItem("zfkey", "true");
                             }
                         }
-                    </script>
-                }
-            </div>
-        </div>
-        <div id="right">
-            <div id="guanzhu">
-                <ul id="yi">
-                    <li><a>@ViewData["guanzhu"]</a></li>
-                    <li><a>@ViewData["fansi"]</a></li>
-                    <li><a>@ViewData["weibocount"]</a></li>
-                </ul>
-                <div id="wuxu_er">
-                    <ul id="er">
-                        <li><a>关注</a></li>
-                        <li><a>粉丝</a></li>
-                        <li><a>微博</a></li>
-                    </ul>
+                        </script>
+                    }
+                </div>
                 </div>
             </div>
-            <div id="biaoqian">
-                <div id="biaoqian_info"></div>
-                @* 待做 *@
-            </div>
+            <div id="right">
+                <div id="guanzhu">
+                    <ul id="yi">
+                        <li><a href="/Tang/GuanzhuList/@ViewData["mId"]">@ViewData["guanzhu"]</a></li>
+                        <li><a href="/Tang/FansiList/@ViewData["mId"]">@ViewData["fansi"]</a></li>
+                        <li><a href="/Tang/MyMicroblog">@ViewData["weibocount"]</a></li>
+                    </ul>
+                    <div id="wuxu_er">
+                        <ul id="er">
+                            <li><a href="/Tang/GuanzhuList/@ViewData["mId"]">关注</a></li>
+                            <li><a href="/Tang/FansiList/@ViewData["mId"]">粉丝</a></li>
+                            <li><a href="/Tang/MyMicroblog">微博</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="biaoqian">
+                    <div id="biaoqian_info"></div>
+                    @* 待做 *@
+                </div>
 
-            <div id="myfan">
-                <p><a>我的粉丝(@ViewData["fansi"])</a></p>
-                <div class="shiyongweiboderen">
-                    @foreach (var item in ViewData["fansiHeadphoto"] as List<Users>)
+                <div id="myfan">
+                    <p><a>我的粉丝(@ViewData["fansi"])</a></p>
+                    <div class="shiyongweiboderen">
+                        @foreach (var item in ViewData["fansiHeadphoto"] as List<Users>)
+                        {
+                            <div class="touxiang">
+                                <dl>
+                                    <dd>
+                                        @if (item.Userinfo.user_headphoto == null)
+                                        {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
+                                        else
+                                        {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
+                                    </dd>
+                                    <dt style="font-size:16px;"><a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a></dt>
+                                </dl>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div id="myguanzhu">
+                    <p><a>我关注的(@ViewData["guanzhu"])</a></p>
+                    @foreach (var item in ViewData["guanzhuHedaphoto"] as List<Users>)
                     {
                         <div class="touxiang">
                             <dl>
                                 <dd>
                                     @if (item.Userinfo.user_headphoto == null)
-                                    {<img src="~/resource/arrowall.gif" style="width:55px;height:55px;" /> }
+                                    {<img src="~/resource/moren.jpg" style="width:55px;height:55px;" /> }
                                     else
                                     {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
                                 </dd>
-                                <dt style="font-size:16px;">@item.user_name</dt>
+                                <dt style="font-size:16px;"><a href="/Tang/TaMicroblog/@item.user_id">@item.user_name</a></dt>
                             </dl>
                         </div>
                     }
                 </div>
             </div>
-            <div id="myguanzhu">
-                <p><a>我关注的(@ViewData["guanzhu"])</a></p>
-                @foreach (var item in ViewData["guanzhuHedaphoto"] as List<Users>)
-                {
-                    <div class="touxiang">
-                        <dl>
-                            <dd>
-                                @if (item.Userinfo.user_headphoto == null)
-                                {<img src="~/resource/arrowall.gif" style="width:55px;height:55px;" /> }
-                                else
-                                {<img src="@item.Userinfo.user_headphoto" style="width:55px;height:55px;" />}
-                            </dd>
-                            <dt style="font-size:16px;">@item.user_name</dt>
-                        </dl>
-                    </div>
-                }
+            <div style="clear:both;"></div>
+            <div id="weibuttom">
+                <span class="weibospan_yi">AAAAAAAAA</span>
+                <span class="weibospan_er">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
             </div>
         </div>
-    </div>
